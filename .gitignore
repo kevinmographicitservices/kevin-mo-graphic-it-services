@@ -1,0 +1,30 @@
+# === KEVIN M.O GRAPHIC & IT SERVICES - .gitignore ===
+
+# Backup folders (keep locally, do NOT publish)
+KEVIN M.O COMPLETE WEBSITE BACKUP/
+KEVIN M.O WEBSITE BACKUP/
+KEVIN-MO-WEBSITE/
+
+# Development / practice files (not used by the live site)
+lesson6.js
+practice.html
+practice.js
+stylebackup.css
+
+# IDE / editor
+.vscode/
+
+# Logs
+*.log
+
+# Sensitive / environment
+.env
+.env.*
+
+# OS junk
+.DS_Store
+Thumbs.db
+
+# Node (if ever used)
+node_modules/
+
