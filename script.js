@@ -505,6 +505,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const typing = document.getElementById("typing");
 
+    if (!typing) return;
+
     function typeEffect() {
 
         currentWord = words[wordIndex];
