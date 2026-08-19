@@ -3544,3 +3544,206 @@ body.dark-mode .process-step p {
 body.dark-mode .step-number {
     color: rgba(0,191,255,0.45);
 }
+/* ================================================================
+   PHASE 2A (REVISED) — PREMIUM HEADER + HERO
+   Sticky navbar, live-dot eyebrow, hero glow, trust strip,
+   scroll cue. Overrides only.
+================================================================ */
+
+/* ---------- STICKY NAVBAR ---------- */
+#navbar {
+    position: sticky;
+    top: 0;
+    z-index: 1040;
+}
+
+#navbar.scrolled {
+    background: rgba(3, 20, 38, 0.92);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.30);
+}
+
+body.dark-mode #navbar.scrolled {
+    background: rgba(13, 42, 59, 0.92);
+}
+
+/* Anchors land correctly below the sticky header */
+section[id] {
+    scroll-margin-top: 84px;
+}
+
+/* ---------- TOP BAR: open-for-projects tag ---------- */
+.top-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 3px 12px;
+    border: 1px solid rgba(255, 215, 0, 0.35);
+    border-radius: 30px;
+    background: rgba(255, 215, 0, 0.10);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.6px;
+    text-transform: uppercase;
+    color: #fff2c9;
+}
+
+.top-tag::before {
+    content: "";
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #FFD700;
+    box-shadow: 0 0 8px rgba(255, 215, 0, 0.9);
+}
+
+/* ---------- HERO: glow + live-dot badge ---------- */
+.hero {
+    position: relative;
+}
+
+.hero-glow {
+    position: absolute;
+    top: 12%;
+    left: 4%;
+    width: 520px;
+    height: 520px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(0, 191, 255, 0.16) 0%, rgba(0, 191, 255, 0) 70%);
+    pointer-events: none;
+    z-index: 0;
+}
+
+.overlay.hero-overlay {
+    position: relative;
+    z-index: 1;
+}
+
+/* Badge: hide the old ::before dot, use the pulsing .dot span */
+.hero-badge::before {
+    display: none;
+}
+
+.hero-badge .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #00BFFF;
+    box-shadow: 0 0 0 0 rgba(0, 191, 255, 0.6);
+    animation: kmog-pulse 2s infinite;
+    flex-shrink: 0;
+}
+
+@keyframes kmog-pulse {
+    0%   { box-shadow: 0 0 0 0 rgba(0, 191, 255, 0.6); }
+    70%  { box-shadow: 0 0 0 10px rgba(0, 191, 255, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(0, 191, 255, 0); }
+}
+
+/* Larger, more confident headline */
+.overlay.hero-overlay h1 {
+    font-size: clamp(44px, 6.5vw, 88px);
+}
+
+/* ---------- HERO TRUST STRIP (reuses existing stats claims) ---------- */
+.hero-trust {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    margin: 36px 0 0;
+    padding: 0;
+    font-size: 15px;
+    color: rgba(255, 255, 255, 0.85);
+}
+
+.hero-trust li {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    padding: 0 26px;
+}
+
+.hero-trust li:first-child {
+    padding-left: 0;
+}
+
+.hero-trust li + li {
+    border-left: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+.hero-trust strong {
+    color: #FFD700;
+    font-size: 22px;
+    font-weight: 800;
+}
+
+/* ---------- SCROLL CUE ---------- */
+.scroll-cue {
+    position: absolute;
+    left: 50%;
+    bottom: 24px;
+    width: 26px;
+    height: 44px;
+    transform: translateX(-50%);
+    border: 2px solid rgba(255, 255, 255, 0.55);
+    border-radius: 20px;
+    z-index: 1;
+}
+
+.scroll-cue::after {
+    content: "";
+    position: absolute;
+    top: 8px;
+    left: 50%;
+    width: 4px;
+    height: 8px;
+    margin-left: -2px;
+    border-radius: 4px;
+    background: #00BFFF;
+    animation: kmog-scroll 1.8s ease-in-out infinite;
+}
+
+@keyframes kmog-scroll {
+    0%   { transform: translateY(0);    opacity: 1; }
+    70%  { transform: translateY(12px); opacity: 0; }
+    100% { transform: translateY(0);    opacity: 0; }
+}
+
+/* ---------- RESPONSIVE ---------- */
+@media (max-width: 1024px) and (min-width: 769px) {
+    .hero-trust li { padding: 0 16px; }
+}
+
+@media (max-width: 768px) {
+    .top-tag { display: none; }
+    .scroll-cue { display: none; }
+    .hero-glow { width: 300px; height: 300px; }
+    .hero-trust {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 8px 0;
+    }
+    .hero-trust li { padding: 0 14px; }
+    .hero-trust li + li { border-left: none; }
+    .hero-trust strong { font-size: 19px; }
+}
+
+/* ---------- DARK MODE ---------- */
+body.dark-mode .hero-trust {
+    color: rgba(230, 241, 247, 0.85);
+}
+
+body.dark-mode .hero-trust strong {
+    color: var(--dm-gold);
+}
+
+body.dark-mode .hero-trust li + li {
+    border-left-color: rgba(255, 255, 255, 0.15);
+}
+
+body.dark-mode .top-tag {
+    color: #ffffff;
+    background: rgba(255, 255, 255, 0.08);
+}
+
