@@ -3355,3 +3355,192 @@ body.dark-mode .btn.btn-hero-outline:hover {
     border-color: #00BFFF;
     color: #7fd9ff;
 }
+/* ================================================================
+   PHASE 2B — MUSKENT-STYLE PREMIUM STRUCTURE
+   Modern agency layout: section eyebrows, numbered process,
+   restored hero typing, premium section styling. Overrides only.
+================================================================ */
+
+/* ---------- SECTION EYEBROW (modern agency label) ---------- */
+.section-eyebrow {
+    display: inline-block;
+    margin: 0 auto 14px;
+    padding: 6px 14px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: #00BFFF;
+    background: rgba(0,191,255,0.08);
+    border: 1px solid rgba(0,191,255,0.35);
+    border-radius: 30px;
+    text-align: center;
+}
+
+.section-eyebrow-light {
+    color: #ffffff;
+    background: rgba(255,255,255,0.10);
+    border-color: rgba(255,255,255,0.35);
+}
+
+/* ---------- HERO TYPING (restored) ---------- */
+.overlay.hero-overlay .hero-type {
+    margin: -14px 0 26px;
+    min-height: 36px;
+    font-size: clamp(18px, 2.2vw, 26px);
+    font-weight: 700;
+    color: #bdf0ff;
+}
+
+.hero-type #typing {
+    color: #00BFFF;
+}
+
+.hero-type #typing::after {
+    content: "|";
+    margin-left: 3px;
+    color: #FFD700;
+    animation: kmog-blink 0.9s step-end infinite;
+}
+
+@keyframes kmog-blink {
+    50% { opacity: 0; }
+}
+
+/* ---------- PROCESS SECTION ---------- */
+section.process {
+    background: #ffffff;
+    width: 100%;
+    max-width: none;
+    margin: 0;
+    padding: 80px 8%;
+    border-radius: 0;
+    box-shadow: none;
+    text-align: center;
+}
+
+.process-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+    max-width: 1200px;
+    margin: 44px auto 0;
+    text-align: left;
+}
+
+.process-step {
+    background: #ffffff;
+    border: 1px solid rgba(0,20,40,0.08);
+    border-radius: 16px;
+    padding: 28px 24px;
+    box-shadow: 0 8px 22px rgba(0,0,0,0.06);
+    transition: transform .3s ease, box-shadow .3s ease;
+}
+
+.process-step:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 16px 34px rgba(0,191,255,0.18);
+}
+
+.step-number {
+    font-size: 36px;
+    font-weight: 800;
+    line-height: 1;
+    color: rgba(0,191,255,0.3);
+    margin-bottom: 14px;
+}
+
+.process-step h3 {
+    color: #00303B;
+    font-size: 21px;
+    margin: 0 0 10px;
+}
+
+.process-step p {
+    color: #444444;
+    font-size: 15px;
+    line-height: 1.7;
+    margin: 0;
+}
+
+/* SUBTLE SPACING / PREMIUM POLISH FOR REORDERED SECTIONS */
+#services .section-eyebrow,
+section.why-us .section-eyebrow,
+#about .section-eyebrow,
+#who-we-are .section-eyebrow,
+#featured-projects .section-eyebrow,
+#portfolio .section-eyebrow,
+#testimonials .section-eyebrow,
+#contact .section-eyebrow {
+    display: block;
+}
+
+/* Extra entry-animation step for the new hero-type child */
+.overlay.hero-overlay > *:nth-child(6) { animation-delay: 0.6s; }
+
+/* ---------- PHASE 2B RESPONSIVE ---------- */
+@media (max-width: 1024px) and (min-width: 769px) {
+    .process-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    section.process {
+        padding: 60px 20px;
+    }
+
+    .process-container {
+        grid-template-columns: 1fr;
+        gap: 18px;
+    }
+
+    .hero-type {
+        font-size: 18px;
+        min-height: 28px;
+        margin-bottom: 22px;
+    }
+}
+
+/* ---------- PHASE 2B DARK MODE ---------- */
+body.dark-mode section.process {
+    background: var(--dm-surface);
+}
+
+body.dark-mode .section-eyebrow {
+    color: var(--dm-cyan);
+    background: rgba(0,191,255,0.10);
+    border-color: rgba(0,191,255,0.4);
+}
+
+body.dark-mode .section-eyebrow-light {
+    color: #ffffff;
+    background: rgba(255,255,255,0.10);
+    border-color: rgba(255,255,255,0.35);
+}
+
+body.dark-mode .overlay.hero-overlay .hero-type {
+    color: #bdf0ff;
+}
+
+body.dark-mode .hero-type #typing::after {
+    color: var(--dm-gold);
+}
+
+body.dark-mode .process-step {
+    background: var(--dm-card);
+    border-color: var(--dm-border);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.35);
+}
+
+body.dark-mode .process-step h3 {
+    color: var(--dm-cyan);
+}
+
+body.dark-mode .process-step p {
+    color: var(--dm-muted);
+}
+
+body.dark-mode .step-number {
+    color: rgba(0,191,255,0.45);
+}
