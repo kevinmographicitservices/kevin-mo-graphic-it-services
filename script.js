@@ -492,11 +492,11 @@ window.addEventListener("scroll", function(){
 document.addEventListener("DOMContentLoaded", function () {
 
     const words = [
-    "Graphic Design",
-    "Website<br>Development",
-    "Branding & Printing",
-    "IT Solutions"
-];
+        "With Graphic Design.",
+        "With Powerful Branding.",
+        "With Modern Websites.",
+        "With Smart IT Solutions."
+    ];
 
     let wordIndex = 0;
     let letterIndex = 0;

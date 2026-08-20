@@ -3747,3 +3747,87 @@ body.dark-mode .top-tag {
     background: rgba(255, 255, 255, 0.08);
 }
 
+/* ================================================================
+   PHASE 2B-1 — MERGED ABOUT + WHO WE ARE
+   Single #about section: About text + About visual (portfolio/branding.jpg)
+   followed by the Who We Are value pillars. #who-we-are is preserved as an
+   in-section compatibility anchor (no duplicate id). Overrides only;
+   appended for zero-risk rollback.
+================================================================ */
+
+/* #who-we-are compatibility anchor: invisible, zero-height */
+#who-we-are {
+    display: block;
+    height: 0;
+    scroll-margin-top: 84px;
+}
+
+/* ---------- ABOUT TWO-COLUMN (text + visual) ---------- */
+#about .about-container {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    align-items: center;
+    gap: 60px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px 0 10px;
+}
+
+#about .about-image {
+    display: flex;
+    justify-content: center;
+}
+
+#about .about-image img {
+    width: 100%;
+    max-width: 560px;
+    height: auto;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    border-radius: 18px;
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.18);
+}
+
+/* ---------- WHO WE ARE (merged value pillars) ---------- */
+#about > .section-eyebrow {
+    display: block;
+    width: fit-content;
+    margin: 60px auto 14px;
+    text-align: center;
+}
+
+#about .who-intro {
+    text-align: center;
+}
+
+#about .who-container {
+    text-align: center;
+}
+
+/* ---------- RESPONSIVE ---------- */
+@media (max-width: 1024px) and (min-width: 769px) {
+    #about .about-container {
+        gap: 36px;
+    }
+}
+
+@media (max-width: 768px) {
+    #about .about-container {
+        grid-template-columns: 1fr;
+        gap: 34px;
+    }
+
+    #about .about-image img {
+        max-width: 100%;
+        height: 300px;
+    }
+
+    #about > .section-eyebrow {
+        margin-top: 48px;
+    }
+}
+
+/* ---------- DARK MODE ---------- */
+body.dark-mode #about .about-image img {
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.45);
+}
