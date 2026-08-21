@@ -3831,3 +3831,180 @@ body.dark-mode .top-tag {
 body.dark-mode #about .about-image img {
     box-shadow: 0 18px 40px rgba(0, 0, 0, 0.45);
 }
+/* ================================================================
+   PHASE 2B-3 — PREMIUM LIGHT SERVICE CARDS
+   Premium light/white service cards with full dark-mode support.
+   Comfortable 4-up desktop layout (no forced squeezing), readable
+   descriptions and generous breathing room. Overrides only;
+   appended for zero-risk rollback.
+================================================================ */
+
+/* ---------- SERVICES LAYOUT (comfortable 4-up desktop) ---------- */
+#services .services-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    align-items: stretch;
+    gap: 32px;
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: 0;
+}
+
+/* ---------- PREMIUM LIGHT CARD ---------- */
+#services .service-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    background: #ffffff;
+    color: #00303B;
+    padding: 40px 28px 32px;
+    border: 1px solid rgba(0, 48, 59, 0.08);
+    border-radius: 20px;
+    box-shadow: 0 10px 28px rgba(0, 48, 59, 0.08);
+    overflow: hidden;
+    transition: transform .35s ease, box-shadow .35s ease;
+}
+
+/* premium gradient accent along the top edge */
+#services .service-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 5px;
+    background: linear-gradient(90deg, #00BFFF, #0B3D91);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform .45s ease;
+}
+
+#services .service-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 22px 44px rgba(0, 191, 255, 0.18);
+}
+
+#services .service-card:hover::before {
+    transform: scaleX(1);
+}
+
+/* ---------- PREMIUM ICON CHIP ---------- */
+#services .service-icon {
+    font-size: 42px;
+    line-height: 1;
+    width: 84px;
+    height: 84px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 22px;
+    background: linear-gradient(135deg, #eaf7ff, #f4fbff);
+    border: 1px solid rgba(0, 191, 255, 0.25);
+    margin: 0 auto 22px;
+    transition: transform .35s ease, box-shadow .35s ease;
+}
+
+#services .service-card:hover .service-icon {
+    transform: scale(1.08);
+    box-shadow: 0 10px 20px rgba(0, 191, 255, 0.22);
+}
+
+#services .service-card h3 {
+    color: #00303C;
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: 0.2px;
+    margin: 0 0 12px;
+}
+
+#services .service-card p {
+    color: #3f5666;
+    font-size: 15px;
+    line-height: 1.75;
+    margin: 0 0 26px;
+}
+
+/* ---------- CARD BUTTON ---------- */
+#services .service-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: auto;
+    padding: 12px 26px;
+    background: #00303B;
+    color: #ffffff;
+    border-radius: 30px;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 14px;
+    letter-spacing: 0.4px;
+    transition: background .3s ease, transform .3s ease, box-shadow .3s ease;
+}
+
+#services .service-btn:hover {
+    background: #00BFFF;
+    color: #042F35;
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(0, 191, 255, 0.30);
+}
+
+/* heading spacing now that an eyebrow sits above it */
+#services h2 {
+    margin-bottom: 46px;
+}
+
+/* ---------- RESPONSIVE ---------- */
+@media (max-width: 1024px) and (min-width: 769px) {
+    #services .services-container {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 28px;
+        max-width: 860px;
+    }
+}
+
+@media (max-width: 768px) {
+    #services .services-container {
+        grid-template-columns: 1fr;
+        gap: 24px;
+        max-width: 520px;
+    }
+
+    #services .service-card {
+        padding: 34px 26px;
+    }
+}
+
+/* ---------- DARK MODE ---------- */
+body.dark-mode #services .service-card {
+    background: var(--dm-card);
+    border-color: var(--dm-border);
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.35);
+}
+
+body.dark-mode #services .service-card:hover {
+    box-shadow: 0 22px 44px rgba(0, 0, 0, 0.55);
+}
+
+body.dark-mode #services .service-icon {
+    background: rgba(0, 191, 255, 0.12);
+    border-color: rgba(0, 191, 255, 0.35);
+}
+
+body.dark-mode #services .service-card h3 {
+    color: var(--dm-cyan);
+}
+
+body.dark-mode #services .service-card p {
+    color: var(--dm-muted);
+}
+
+body.dark-mode #services .service-btn {
+    background: rgba(0, 191, 255, 0.14);
+    color: var(--dm-cyan);
+}
+
+body.dark-mode #services .service-btn:hover {
+    background: var(--dm-cyan);
+    color: #04272e;
+}
