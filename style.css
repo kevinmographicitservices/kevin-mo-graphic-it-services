@@ -4596,3 +4596,259 @@ body.dark-mode #featured-projects .slider-wrapper {
 body.dark-mode #featured-projects::before {
     background: linear-gradient(90deg, var(--dm-cyan), #0B3D91);
 }
+
+/* ================================================================
+   PHASE 2B-7 — PREMIUM LIGHT PORTFOLIO GALLERY
+   Premium light/white portfolio gallery with full dark-mode support.
+   CSS-only polish for the existing shell: filtered pill menu,
+   responsive work grid and premium overlay captions. The JavaScript
+   filter logic and lightbox behaviour are untouched. Overrides only;
+   appended for zero-risk rollback.
+   ================================================================ */
+
+/* ---------- PREMIUM PANEL SHELL ---------- */
+#portfolio {
+    position: relative;
+    max-width: 1240px;
+    margin: 60px auto;
+    padding: 64px 40px;
+    background: #ffffff;
+    border: 1px solid rgba(0, 48, 59, 0.08);
+    border-radius: 24px;
+    box-shadow: 0 12px 32px rgba(0, 48, 59, 0.08);
+    text-align: center;
+    box-sizing: border-box;
+}
+
+/* premium gradient accent along the top edge */
+#portfolio::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 5px;
+    background: linear-gradient(90deg, #00BFFF, #0B3D91);
+    border-radius: 24px 24px 0 0;
+}
+
+/* ---------- PREMIUM HEADING ---------- */
+#portfolio h2 {
+    color: #00303C;
+    font-size: 40px;
+    font-weight: 800;
+    letter-spacing: 0.2px;
+    margin: 0 0 28px;
+}
+
+/* ---------- PREMIUM FILTER MENU ---------- */
+#portfolio .portfolio-menu {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+    margin: 0 0 40px;
+}
+
+#portfolio .portfolio-menu .filter-btn {
+    padding: 12px 26px;
+    border: 1px solid rgba(0, 48, 59, 0.10);
+    border-radius: 30px;
+    background: #f2f7fb;
+    color: #3f5663;
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 14px;
+    letter-spacing: 0.3px;
+    transition: background .3s ease, color .3s ease, border-color .3s ease, transform .3s ease, box-shadow .3s ease;
+}
+
+#portfolio .portfolio-menu .filter-btn:hover {
+    background: #e6f1f8;
+    color: #00303C;
+    border-color: rgba(0, 191, 255, 0.35);
+    transform: translateY(-2px);
+}
+
+#portfolio .portfolio-menu .filter-btn.active {
+    background: linear-gradient(135deg, #00BFFF, #0B3D91);
+    color: #ffffff;
+    border-color: transparent;
+    box-shadow: 0 10px 20px rgba(0, 191, 255, 0.22);
+}
+
+/* ---------- PREMIUM GALLERY GRID ---------- */
+#portfolio .gallery {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 26px;
+}
+
+/* ---------- PREMIUM WORK CARD ---------- */
+#portfolio .portfolio-item {
+    position: relative;
+    overflow: hidden;
+    border-radius: 18px;
+    background: #ffffff;
+    border: 1px solid rgba(0, 48, 59, 0.08);
+    box-shadow: 0 10px 26px rgba(0, 48, 59, 0.08);
+    cursor: pointer;
+    transition: transform .35s ease, box-shadow .35s ease;
+}
+
+#portfolio .portfolio-item:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 22px 44px rgba(0, 191, 255, 0.18);
+}
+
+#portfolio .portfolio-item img {
+    width: 100%;
+    display: block;
+    height: 250px;
+    object-fit: cover;
+    transition: transform .5s ease;
+    user-select: none;
+    -webkit-user-drag: none;
+}
+
+#portfolio .portfolio-item:hover img {
+    transform: scale(1.08);
+}
+
+/* ---------- PREMIUM OVERLAY CAPTION ---------- */
+#portfolio .portfolio-overlay {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    padding: 22px 20px;
+    background: linear-gradient(180deg, rgba(0, 48, 59, 0.00) 0%, rgba(0, 48, 59, 0.88) 100%);
+    color: #ffffff;
+    text-align: center;
+    transform: translateY(100%);
+    transition: transform .4s ease;
+}
+
+#portfolio .portfolio-item:hover .portfolio-overlay {
+    transform: translateY(0);
+}
+
+#portfolio .portfolio-overlay h3 {
+    color: #ffffff;
+    font-size: 20px;
+    font-weight: 800;
+    letter-spacing: 0.2px;
+    margin: 0 0 8px;
+}
+
+#portfolio .portfolio-overlay p {
+    color: #cfe4ee;
+    font-size: 14px;
+    letter-spacing: 0.3px;
+    margin: 0;
+}
+
+/* ---------- RESPONSIVE ----------
+   Tablet: two-column gallery with tightened panel spacing. */
+@media (max-width: 1024px) and (min-width: 769px) {
+    #portfolio {
+        padding: 54px 30px;
+        border-radius: 22px;
+    }
+
+    #portfolio h2 {
+        font-size: 36px;
+        margin-bottom: 24px;
+    }
+
+    #portfolio .portfolio-menu {
+        margin-bottom: 34px;
+    }
+
+    #portfolio .gallery {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 22px;
+    }
+}
+
+/* Mobile: single column, reduced spacing; no new controls added. */
+@media (max-width: 768px) {
+    #portfolio {
+        padding: 40px 18px;
+        border-radius: 20px;
+        margin: 40px 15px;
+    }
+
+    #portfolio h2 {
+        font-size: 30px;
+        margin-bottom: 20px;
+    }
+
+    #portfolio .portfolio-menu {
+        gap: 6px;
+        margin-bottom: 30px;
+    }
+
+    #portfolio .portfolio-menu .filter-btn {
+        padding: 10px 18px;
+        font-size: 13px;
+    }
+
+    #portfolio .gallery {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    #portfolio .portfolio-item img {
+        height: 230px;
+    }
+}
+
+/* ---------- DARK MODE ---------- */
+body.dark-mode #portfolio {
+    background: var(--dm-surface);
+    border-color: var(--dm-border);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
+}
+
+body.dark-mode #portfolio::before {
+    background: linear-gradient(90deg, var(--dm-cyan), #0B3D91);
+}
+
+body.dark-mode #portfolio h2 {
+    color: var(--dm-text);
+}
+
+body.dark-mode #portfolio .portfolio-menu .filter-btn {
+    background: var(--dm-card-soft);
+    color: var(--dm-text);
+    border-color: var(--dm-border);
+}
+
+body.dark-mode #portfolio .portfolio-menu .filter-btn:hover {
+    background: var(--dm-card);
+    color: var(--dm-cyan);
+    border-color: var(--dm-border);
+}
+
+body.dark-mode #portfolio .portfolio-menu .filter-btn.active {
+    background: var(--dm-cyan);
+    color: #04272e;
+    border-color: transparent;
+}
+
+body.dark-mode #portfolio .portfolio-item {
+    background: var(--dm-card);
+    border-color: var(--dm-border);
+    box-shadow: 0 10px 26px rgba(0, 0, 0, 0.35);
+}
+
+body.dark-mode #portfolio .portfolio-item:hover {
+    box-shadow: 0 22px 44px rgba(0, 0, 0, 0.55);
+}
+
+body.dark-mode #portfolio .portfolio-overlay {
+    background: linear-gradient(180deg,
+                rgba(0, 0, 0, 0.00) 0%,
+                rgba(0, 0, 0, 0.85) 100%);
+}
