@@ -5399,3 +5399,184 @@ body.dark-mode #contact #contactForm #sendBtn:hover {
     background: var(--dm-cyan);
     color: #04272e;
 }
+/* ================================================================
+   PHASE 2B-10 — PREMIUM LIGHT TESTIMONIALS SECTION
+   Premium light/white Testimonials (standalone heading — no eyebrow)
+   with full dark-mode support. Scoped purely to #testimonials
+   (panel shell + heading) and .card-content (inner premium card).
+   The .testimonial-card geometry (flex-basis, width, padding, gap,
+   margin, horizontal positioning), the .testimonial-track layout
+   (flex, gap, transition, transform) and the JS carousel translateX
+   math are preserved exactly. CSS-only; all content & functionality
+   untouched. Overrides only; appended for zero-risk rollback.
+================================================================ */
+
+/* ---------- PREMIUM PANEL SHELL ---------- */
+#testimonials {
+    position: relative;
+    max-width: 1240px;
+    margin: 60px auto;
+    padding: 64px 44px;
+    background: #ffffff;
+    border: 1px solid rgba(0, 48, 59, 0.08);
+    border-radius: 24px;
+    box-shadow: 0 12px 32px rgba(0, 48, 59, 0.08);
+    box-sizing: border-box;
+    text-align: center;
+}
+
+/* premium gradient accent along the top edge */
+#testimonials::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 6px;
+    background: linear-gradient(90deg, #00BFFF, #0B3D91);
+    border-radius: 24px 24px 0 0;
+}
+
+/* ---------- STANDALONE HEADING (no eyebrow) ---------- */
+#testimonials h2 {
+    color: #00303B;
+    font-size: clamp(30px, 3.2vw, 40px);
+    font-weight: 800;
+    letter-spacing: 0.2px;
+    margin: 0 0 40px;
+}
+
+/* ---------- PREMIUM LIGHT CARD CONTENT ---------- */
+.testimonial-card .card-content {
+    position: relative;
+    background: #ffffff;
+    color: #00303B;
+    border: 1px solid rgba(0, 48, 59, 0.08);
+    border-radius: 20px;
+    box-shadow: 0 10px 28px rgba(0, 48, 59, 0.08);
+    overflow: hidden;
+    padding: 34px 28px;
+    transition: box-shadow .35s ease, border-color .35s ease;
+}
+
+/* premium gradient accent along the top edge */
+.testimonial-card .card-content::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 5px;
+    background: linear-gradient(90deg, #00BFFF, #0B3D91);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform .45s ease;
+}
+
+.testimonial-card:hover .card-content {
+    border-color: rgba(0, 191, 255, 0.25);
+    box-shadow: 0 22px 44px rgba(0, 191, 255, 0.18);
+}
+
+.testimonial-card:hover .card-content::before {
+    transform: scaleX(1);
+}
+
+/* ---------- CARD CONTENT TYPOGRAPHY ---------- */
+.testimonial-card .card-content .stars {
+    color: #FFB800;
+    font-size: 22px;
+    letter-spacing: 2px;
+    margin: 0 0 15px;
+}
+
+.testimonial-card .card-content p {
+    color: #3f5666;
+    font-size: 16px;
+    line-height: 1.85;
+    margin: 0;
+}
+
+.testimonial-card .card-content h3 {
+    color: #0B3D91;
+    font-size: 19px;
+    font-weight: 800;
+    letter-spacing: 0.4px;
+    margin: 20px 0 0;
+}
+
+/* ---------- RESPONSIVE ---------- */
+@media (max-width: 1024px) and (min-width: 769px) {
+    #testimonials {
+        padding: 54px 30px;
+        border-radius: 22px;
+    }
+
+    #testimonials::before {
+        border-radius: 22px 22px 0 0;
+    }
+
+    .testimonial-card .card-content {
+        padding: 30px 24px;
+    }
+}
+
+@media (max-width: 768px) {
+    #testimonials {
+        padding: 40px 20px;
+        border-radius: 20px;
+        margin: 40px 15px;
+    }
+
+    #testimonials::before {
+        border-radius: 20px 20px 0 0;
+    }
+
+    #testimonials h2 {
+        font-size: 30px;
+        margin-bottom: 30px;
+    }
+
+    .testimonial-card .card-content {
+        padding: 26px 22px;
+    }
+}
+
+/* ---------- DARK MODE ---------- */
+body.dark-mode #testimonials {
+    background: var(--dm-surface);
+    border-color: var(--dm-border);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
+}
+
+body.dark-mode #testimonials::before {
+    background: linear-gradient(90deg, var(--dm-cyan), #0B3D91);
+}
+
+body.dark-mode #testimonials h2 {
+    color: var(--dm-text);
+}
+
+body.dark-mode .testimonial-card .card-content {
+    background: var(--dm-card);
+    border-color: rgba(0, 191, 255, 0.22);
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.40);
+    color: var(--dm-text);
+}
+
+body.dark-mode .testimonial-card .card-content p {
+    color: var(--dm-muted);
+}
+
+body.dark-mode .testimonial-card .card-content h3 {
+    color: var(--dm-cyan);
+}
+
+body.dark-mode .testimonial-card .card-content .stars {
+    color: var(--dm-gold);
+}
+
+body.dark-mode .testimonial-card:hover .card-content {
+    border-color: rgba(0, 191, 255, 0.45);
+    box-shadow: 0 22px 44px rgba(0, 191, 255, 0.18);
+}
