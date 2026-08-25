@@ -4852,3 +4852,279 @@ body.dark-mode #portfolio .portfolio-overlay {
                 rgba(0, 0, 0, 0.00) 0%,
                 rgba(0, 0, 0, 0.85) 100%);
 }
+/* ================================================================
+   PHASE 2B-8 — PREMIUM LIGHT ABOUT SECTION
+   Premium light/white About (About Us text + visual + Who We Are
+   value pillars) with full dark-mode support. Standalone "About Us"
+   heading — no eyebrow. Scoped purely to the About area (CSS-only;
+   all content & functionality untouched). Overrides only; appended
+   for zero-risk rollback.
+================================================================ */
+
+/* ---------- PREMIUM PANEL SHELL ---------- */
+#about {
+    position: relative;
+    max-width: 1240px;
+    margin: 60px auto;
+    padding: 64px 44px;
+    background: #ffffff;
+    border: 1px solid rgba(0, 48, 59, 0.08);
+    border-radius: 24px;
+    box-shadow: 0 12px 32px rgba(0, 48, 59, 0.08);
+    box-sizing: border-box;
+}
+
+/* premium gradient accent along the top edge */
+#about::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 6px;
+    background: linear-gradient(90deg, #00BFFF, #0B3D91);
+    border-radius: 24px 24px 0 0;
+}
+
+/* ---------- STANDALONE "ABOUT US" HEADING (no eyebrow) ---------- */
+#about .about-text h2 {
+    color: #00303B;
+    font-size: clamp(30px, 3.2vw, 40px);
+    font-weight: 800;
+    letter-spacing: 0.2px;
+    margin: 0 0 24px;
+}
+
+/* ---------- ABOUT TEXT ---------- */
+#about .about-text p {
+    color: #3f5666;
+    font-size: 16px;
+    line-height: 1.85;
+    margin: 0 0 20px;
+}
+
+#about .about-text strong {
+    color: #0B3D91;
+    font-weight: 800;
+}
+
+/* CTA spacing inside the text block */
+#about .about-text .btn {
+    margin-top: 12px;
+}
+
+/* ---------- ABOUT VISUAL FRAME ---------- */
+#about .about-image img {
+    border: 6px solid #ffffff;
+    outline: 1px solid rgba(0, 48, 59, 0.10);
+    border-radius: 18px;
+    box-shadow: 0 18px 40px rgba(0, 48, 59, 0.16);
+}
+
+/* ---------- WHO INTRO ---------- */
+#about .who-intro {
+    max-width: 820px;
+    margin: 56px auto 0;
+    text-align: center;
+    color: #3f5666;
+    font-size: 17px;
+    line-height: 1.8;
+}
+
+#about .who-intro strong {
+    color: #0B3D91;
+}
+
+/* ---------- PREMIUM LIGHT VALUE PILLARS ---------- */
+#about .who-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    align-items: stretch;
+    gap: 30px;
+    max-width: 1200px;
+    margin: 44px auto 0;
+    padding: 0;
+}
+
+#about .who-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    background: #ffffff;
+    color: #00303B;
+    padding: 40px 28px 32px;
+    border: 1px solid rgba(0, 48, 59, 0.08);
+    border-radius: 20px;
+    box-shadow: 0 10px 28px rgba(0, 48, 59, 0.08);
+    overflow: hidden;
+    transition: transform .35s ease, box-shadow .35s ease;
+}
+
+/* premium gradient accent along the top edge */
+#about .who-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 5px;
+    background: linear-gradient(90deg, #00BFFF, #0B3D91);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform .45s ease;
+}
+
+#about .who-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 22px 44px rgba(0, 191, 255, 0.18);
+}
+
+#about .who-card:hover::before {
+    transform: scaleX(1);
+}
+
+/* ---------- PREMIUM ICON CHIP ---------- */
+#about .who-icon {
+    width: 84px;
+    height: 84px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 22px;
+    background: linear-gradient(135deg, #eaf7ff, #f4fbff);
+    border: 1px solid rgba(0, 191, 255, 0.25);
+    margin: 0 auto 22px;
+    font-size: 38px;
+    transition: transform .35s ease, box-shadow .35s ease;
+}
+
+#about .who-card:hover .who-icon {
+    transform: scale(1.08);
+    box-shadow: 0 10px 20px rgba(0, 191, 255, 0.22);
+}
+
+#about .who-card h3 {
+    color: #00303C;
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: 0.2px;
+    margin: 0 0 12px;
+}
+
+#about .who-card p {
+    color: #3f5666;
+    font-size: 15px;
+    line-height: 1.75;
+    margin: 0;
+}
+/* ---------- RESPONSIVE ---------- */
+@media (max-width: 1024px) and (min-width: 769px) {
+    #about {
+        padding: 54px 30px;
+        border-radius: 22px;
+    }
+
+    #about::before {
+        border-radius: 22px 22px 0 0;
+    }
+
+    #about .about-container {
+        gap: 36px;
+    }
+
+    #about .who-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 24px;
+    }
+
+    #about .who-card {
+        width: calc(50% - 12px);
+    }
+}
+
+@media (max-width: 768px) {
+    #about {
+        padding: 40px 20px;
+        border-radius: 20px;
+        margin: 40px 15px;
+    }
+
+    #about::before {
+        border-radius: 20px 20px 0 0;
+    }
+
+    #about .about-text h2 {
+        font-size: 30px;
+        margin-bottom: 18px;
+    }
+
+    #about .about-image img {
+        height: 280px;
+    }
+
+    #about .who-intro {
+        font-size: 16px;
+        line-height: 1.7;
+        margin-top: 40px;
+    }
+
+    #about .who-container {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+}
+
+/* ---------- DARK MODE ---------- */
+body.dark-mode #about {
+    background: var(--dm-surface);
+    border-color: var(--dm-border);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
+}
+
+body.dark-mode #about::before {
+    background: linear-gradient(90deg, var(--dm-cyan), #0B3D91);
+}
+
+body.dark-mode #about .about-text h2 {
+    color: var(--dm-text);
+}
+
+body.dark-mode #about .about-text p,
+body.dark-mode #about .who-intro,
+body.dark-mode #about .who-card p {
+    color: var(--dm-muted);
+}
+
+body.dark-mode #about .about-text strong,
+body.dark-mode #about .who-intro strong {
+    color: var(--dm-blue);
+}
+
+body.dark-mode #about .about-image img {
+    border-color: rgba(0, 191, 255, 0.25);
+    outline-color: rgba(255, 255, 255, 0.10);
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.45);
+}
+
+body.dark-mode #about .who-card {
+    background: var(--dm-card);
+    border-color: var(--dm-border);
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.35);
+}
+
+body.dark-mode #about .who-card:hover {
+    box-shadow: 0 22px 44px rgba(0, 0, 0, 0.55);
+}
+
+body.dark-mode #about .who-icon {
+    background: rgba(0, 191, 255, 0.12);
+    border-color: rgba(0, 191, 255, 0.35);
+}
+
+body.dark-mode #about .who-card h3 {
+    color: var(--dm-cyan);
+}
