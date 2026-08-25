@@ -5128,3 +5128,274 @@ body.dark-mode #about .who-icon {
 body.dark-mode #about .who-card h3 {
     color: var(--dm-cyan);
 }
+/* ================================================================
+   PHASE 2B-9 — PREMIUM LIGHT CONTACT SECTION
+   Premium light/white Contact (standalone "Contact Us" heading,
+   info card + form) with full dark-mode support. Standalone heading
+   — no eyebrow. Form focus ring is cyan (#00BFFF). Facebook
+   WhatsApp button left untouched. Scoped purely to the Contact area
+   (CSS-only; all content & functionality untouched). Overrides only;
+   appended for zero-risk rollback.
+================================================================ */
+
+/* ---------- PREMIUM PANEL SHELL ---------- */
+#contact {
+    position: relative;
+    max-width: 1240px;
+    margin: 60px auto;
+    padding: 64px 44px;
+    background: #ffffff;
+    border: 1px solid rgba(0, 48, 59, 0.08);
+    border-radius: 24px;
+    box-shadow: 0 12px 32px rgba(0, 48, 59, 0.08);
+    box-sizing: border-box;
+}
+
+/* premium gradient accent along the top edge */
+#contact::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 6px;
+    background: linear-gradient(90deg, #00BFFF, #0B3D91);
+    border-radius: 24px 24px 0 0;
+}
+
+/* ---------- STANDALONE "CONTACT US" HEADING (no eyebrow) ---------- */
+#contact > h2 {
+    color: #00303B;
+    font-size: clamp(30px, 3.2vw, 40px);
+    font-weight: 800;
+    letter-spacing: 0.2px;
+    margin: 0 0 40px;
+    position: static;
+}
+
+/* ---------- TWO-COLUMN LAYOUT ---------- */
+#contact .contact-container {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    align-items: start;
+    gap: 48px;
+}
+
+/* ---------- CONTACT INFO CARD ---------- */
+#contact .contact-info {
+    background: #f4fafc;
+    border: 1px solid rgba(0, 48, 59, 0.08);
+    border-radius: 20px;
+    padding: 32px;
+    box-shadow: 0 10px 28px rgba(0, 48, 59, 0.08);
+}
+
+#contact .contact-info h3 {
+    color: #00303B;
+    font-size: 23px;
+    font-weight: 800;
+    margin: 0 0 16px;
+}
+
+#contact .contact-info p {
+    color: #3f5666;
+    font-size: 16px;
+    line-height: 1.75;
+    margin: 0 0 12px;
+}
+
+#contact .contact-info a {
+    color: #0B3D91;
+    text-decoration: none;
+    font-weight: 700;
+    transition: color .3s ease;
+}
+
+#contact .contact-info a:hover {
+    color: #00BFFF;
+}
+
+/* ---------- CONTACT FORM CARD ---------- */
+#contact #contactForm {
+    background: #f4fafc;
+    border: 1px solid rgba(0, 48, 59, 0.08);
+    border-radius: 20px;
+    padding: 32px;
+    box-shadow: 0 10px 28px rgba(0, 48, 59, 0.08);
+    max-width: none;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+#contact #contactForm input,
+#contact #contactForm textarea {
+    width: 100%;
+    padding: 13px 16px;
+    margin: 8px 0 15px;
+    background: #ffffff;
+    color: #00303B;
+    border: 1px solid rgba(0, 48, 59, 0.16);
+    border-radius: 12px;
+    font-size: 15px;
+    font-family: inherit;
+    box-sizing: border-box;
+    transition: border-color .3s ease, box-shadow .3s ease;
+}
+
+#contact #contactForm input::placeholder,
+#contact #contactForm textarea::placeholder {
+    color: #3f5666;
+    opacity: 0.85;
+}
+
+/* CYAN focus ring (correction lock-in: cyan, never gold) */
+#contact #contactForm input:focus,
+#contact #contactForm textarea:focus {
+    outline: none;
+    border-color: #00BFFF;
+    box-shadow: 0 0 0 3px rgba(0, 191, 255, 0.18);
+}
+
+#contact #contactForm #sendBtn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 6px;
+    padding: 14px 34px;
+    background: #00303B;
+    color: #ffffff;
+    border: none;
+    border-radius: 30px;
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 0.4px;
+    font-family: inherit;
+    cursor: pointer;
+    transition: background .3s ease, transform .3s ease, box-shadow .3s ease;
+}
+
+#contact #contactForm #sendBtn:hover {
+    background: #00BFFF;
+    color: #042F35;
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(0, 191, 255, 0.30);
+}
+/* ---------- RESPONSIVE ---------- */
+@media (max-width: 1024px) and (min-width: 769px) {
+    #contact {
+        padding: 54px 30px;
+        border-radius: 22px;
+    }
+
+    #contact::before {
+        border-radius: 22px 22px 0 0;
+    }
+
+    #contact .contact-container {
+        gap: 32px;
+    }
+}
+
+@media (max-width: 768px) {
+    #contact {
+        padding: 40px 20px;
+        border-radius: 20px;
+        margin: 40px 15px;
+    }
+
+    #contact::before {
+        border-radius: 20px 20px 0 0;
+    }
+
+    #contact > h2 {
+        font-size: 30px;
+        margin-bottom: 30px;
+    }
+
+    #contact .contact-container {
+        grid-template-columns: 1fr;
+        gap: 28px;
+    }
+
+    #contact .contact-info,
+    #contact #contactForm {
+        padding: 26px 22px;
+    }
+}
+
+/* ---------- DARK MODE ---------- */
+body.dark-mode #contact {
+    background: var(--dm-surface);
+    border-color: var(--dm-border);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
+}
+
+body.dark-mode #contact::before {
+    background: linear-gradient(90deg, var(--dm-cyan), #0B3D91);
+}
+
+body.dark-mode #contact > h2 {
+    color: var(--dm-text);
+}
+
+body.dark-mode #contact .contact-container {
+    background: transparent;
+}
+
+body.dark-mode #contact .contact-info {
+    background: var(--dm-card);
+    border-color: var(--dm-border);
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.35);
+}
+
+body.dark-mode #contact .contact-info h3 {
+    color: var(--dm-cyan);
+}
+
+body.dark-mode #contact .contact-info p {
+    color: var(--dm-muted);
+}
+
+body.dark-mode #contact .contact-info a {
+    color: var(--dm-blue);
+}
+
+body.dark-mode #contact .contact-info a:hover {
+    color: var(--dm-cyan);
+}
+
+body.dark-mode #contact #contactForm {
+    background: var(--dm-card);
+    border-color: var(--dm-border);
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.35);
+}
+
+body.dark-mode #contact #contactForm input,
+body.dark-mode #contact #contactForm textarea {
+    background: #0b2432;
+    color: var(--dm-text);
+    border-color: var(--dm-border);
+}
+
+body.dark-mode #contact #contactForm input::placeholder,
+body.dark-mode #contact #contactForm textarea::placeholder {
+    color: var(--dm-muted);
+}
+
+/* CYAN focus ring stays cyan in dark mode too */
+body.dark-mode #contact #contactForm input:focus,
+body.dark-mode #contact #contactForm textarea:focus {
+    border-color: var(--dm-cyan);
+    box-shadow: 0 0 0 3px rgba(0, 191, 255, 0.18);
+}
+
+body.dark-mode #contact #contactForm #sendBtn {
+    background: rgba(0, 191, 255, 0.14);
+    color: var(--dm-cyan);
+}
+
+body.dark-mode #contact #contactForm #sendBtn:hover {
+    background: var(--dm-cyan);
+    color: #04272e;
+}
