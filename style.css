@@ -5582,3 +5582,173 @@ body.dark-mode .testimonial-card:hover .card-content {
     border-color: rgba(0, 191, 255, 0.45);
     box-shadow: 0 22px 44px rgba(0, 191, 255, 0.18);
 }
+/* ================================================================
+   PHASE 2B-11 — PREMIUM LIGHT STATS SECTION
+   Premium light/white Stats panel (eyebrow + 4 stat cards) with
+   full dark-mode support. Numerals lock-in: light mode uses brand
+   blue/teal #0B3D91 with the #00BFFF brand accent where
+   appropriate; dark mode keeps var(--dm-gold) numerals as
+   specified. Scoped purely to .stats (CSS-only; all counter
+   data-target / data-suffix values, animation & functionality
+   untouched). Overrides only; appended for zero-risk rollback.
+================================================================ */
+
+/* ---------- PREMIUM PANEL SHELL ---------- */
+.stats {
+    position: relative;
+    max-width: 1240px;
+    margin: 60px auto;
+    padding: 64px 44px;
+    background: #ffffff;
+    border: 1px solid rgba(0, 48, 59, 0.08);
+    border-radius: 24px;
+    box-shadow: 0 12px 32px rgba(0, 48, 59, 0.08);
+    box-sizing: border-box;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 40px 30px;
+    color: #00303B;
+    text-align: center;
+}
+
+/* premium gradient accent along the top edge */
+.stats::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 6px;
+    background: linear-gradient(90deg, #00BFFF, #0B3D91);
+    border-radius: 24px 24px 0 0;
+}
+
+/* ---------- EYEBROW (full-width brand accent on light panel) ---------- */
+.stats .section-eyebrow {
+    grid-column: 1 / -1;
+    display: block;
+    width: fit-content;
+    margin: 0 auto 16px;
+    color: #0B3D91;
+    background: rgba(0, 191, 255, 0.10);
+    border-color: rgba(0, 191, 255, 0.30);
+}
+
+/* ---------- PREMIUM LIGHT STAT CARD ---------- */
+.stats .stat {
+    background: #f4fafc;
+    border: 1px solid rgba(0, 48, 59, 0.08);
+    border-radius: 20px;
+    padding: 32px 22px;
+    box-shadow: 0 10px 28px rgba(0, 48, 59, 0.08);
+    transition: transform .35s ease, box-shadow .35s ease, border-color .35s ease;
+}
+
+.stats .stat:hover {
+    transform: translateY(-6px);
+    border-color: rgba(0, 191, 255, 0.30);
+    box-shadow: 0 22px 44px rgba(0, 191, 255, 0.18);
+}
+
+/* ---------- NUMERALS: brand blue/teal with brand accent ---------- */
+.stats .stat h3 {
+    color: #0B3D91;
+    font-size: clamp(44px, 4.5vw, 52px);
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: 0.5px;
+    margin: 0 0 10px;
+}
+
+.stats .stat p {
+    color: #3f5666;
+    margin: 0;
+    font-size: 17px;
+    line-height: 1.5;
+}
+
+/* ---------- RESPONSIVE ---------- */
+@media (max-width: 1280px) {
+    .stats {
+        margin: 56px 20px;
+    }
+}
+
+@media (max-width: 1024px) and (min-width: 769px) {
+    .stats {
+        padding: 54px 30px;
+        border-radius: 22px;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 32px;
+    }
+
+    .stats::before {
+        border-radius: 22px 22px 0 0;
+    }
+
+    .stats .stat {
+        padding: 30px 22px;
+    }
+}
+
+@media (max-width: 768px) {
+    .stats {
+        padding: 40px 20px;
+        border-radius: 20px;
+        grid-template-columns: 1fr;
+        gap: 24px;
+        margin: 40px 15px;
+    }
+
+    .stats::before {
+        border-radius: 20px 20px 0 0;
+    }
+
+    .stats .section-eyebrow {
+        margin-bottom: 4px;
+    }
+
+    .stats .stat {
+        padding: 28px 22px;
+    }
+
+    .stats .stat h3 {
+        font-size: 44px;
+    }
+}
+
+/* ---------- DARK MODE ---------- */
+body.dark-mode .stats {
+    background: var(--dm-surface);
+    border-color: var(--dm-border);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
+}
+
+body.dark-mode .stats::before {
+    background: linear-gradient(90deg, var(--dm-cyan), #0B3D91);
+}
+
+body.dark-mode .stats .section-eyebrow {
+    color: var(--dm-cyan);
+    background: rgba(0, 191, 255, 0.10);
+    border-color: rgba(0, 191, 255, 0.25);
+}
+
+body.dark-mode .stats .stat {
+    background: var(--dm-card);
+    border-color: var(--dm-border);
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.35);
+}
+
+body.dark-mode .stats .stat h3 {
+    color: var(--dm-gold);
+}
+
+body.dark-mode .stats .stat p {
+    color: var(--dm-muted);
+}
+
+body.dark-mode .stats .stat:hover {
+    border-color: rgba(0, 191, 255, 0.40);
+    box-shadow: 0 22px 44px rgba(0, 0, 0, 0.45);
+}
