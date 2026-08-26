@@ -9,6 +9,7 @@ html{
 html,
 body{
     width:100%;
+    margin:0;
     overflow-x:hidden;
 }
 
@@ -2340,7 +2341,8 @@ hr{
         position: fixed;
 
         top: 75px;
-        left: -100%;
+        left: 0;
+        transform: translateX(-100%);
 
         width: 100%;
         height: calc(100vh - 75px);
@@ -2355,7 +2357,7 @@ hr{
 
         list-style: none;
 
-        transition: left 0.4s ease;
+        transition: transform 0.4s ease;
 
         overflow-y: auto;
 
@@ -2364,7 +2366,7 @@ hr{
 
     /* Show menu when JavaScript adds .active */
     #navbar .nav-links.active {
-        left: 0;
+        transform: translateX(0);
     }
 
     /* Navigation items */
