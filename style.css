@@ -5906,3 +5906,274 @@ body.dark-mode .cta .btn:hover {
     background: var(--dm-blue);
     box-shadow: 0 20px 40px rgba(0, 191, 255, 0.35);
 }
+/* ================================================================
+   PHASE 2B-13 — PREMIUM LIGHT MISSION / VISION SECTION
+   Strictly limited parity fix: brings Mission/Vision up to the same
+   premium light panel treatment as the already-approved Phase 2B-11
+   (Stats) and Phase 2B-12 (CTA) light surfaces. Light mode uses a
+   premium white panel with brand blue/teal #0B3D91 headings and the
+   #00BFFF brand accent; dark mode keeps the existing dm-* tokens
+   (cards are already dm-cyan headings / dm-card fills elsewhere).
+   Scoped purely to .mission and .mission-card (CSS-only — existing
+   HTML content, structure & all other sections untouched).
+   Overrides only; appended for zero-risk rollback.
+================================================================ */
+
+/* ---------- PREMIUM PANEL SHELL ---------- */
+.mission {
+    position: relative;
+    max-width: 1240px;
+    margin: 60px auto;
+    padding: 64px 44px;
+    background: #ffffff;
+    border: 1px solid rgba(0, 48, 59, 0.08);
+    border-radius: 24px;
+    box-shadow: 0 12px 32px rgba(0, 48, 59, 0.08);
+    box-sizing: border-box;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    color: #00303B;
+}
+
+/* premium gradient accent along the top edge */
+.mission::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 6px;
+    background: linear-gradient(90deg, #00BFFF, #0B3D91);
+    border-radius: 24px 24px 0 0;
+}
+
+/* ---------- PREMIUM LIGHT MISSION / VISION CARD ---------- */
+.mission-card {
+    background: #f4fafc;
+    border: 1px solid rgba(0, 48, 59, 0.08);
+    border-radius: 20px;
+    padding: 38px 34px;
+    box-shadow: 0 10px 28px rgba(0, 48, 59, 0.08);
+    transition: transform .35s ease, box-shadow .35s ease, border-color .35s ease;
+}
+
+.mission-card:hover {
+    transform: translateY(-6px);
+    border-color: rgba(0, 191, 255, 0.30);
+    box-shadow: 0 22px 44px rgba(0, 191, 255, 0.18);
+}
+
+/* ---------- MISSION / VISION HEAD ---------- */
+.mission-card h2 {
+    color: #0B3D91;
+    font-size: clamp(24px, 2.6vw, 32px);
+    font-weight: 800;
+    margin: 0 0 16px;
+}
+
+.mission-card p {
+    color: #3f5666;
+    margin: 0;
+    font-size: 17px;
+    line-height: 1.85;
+}
+
+/* ---------- RESPONSIVE ---------- */
+@media (max-width: 1280px) {
+    .mission {
+        margin: 56px 20px;
+    }
+}
+
+@media (max-width: 1024px) and (min-width: 769px) {
+    .mission {
+        padding: 54px 30px;
+        border-radius: 22px;
+        gap: 28px;
+    }
+
+    .mission::before {
+        border-radius: 22px 22px 0 0;
+    }
+
+    .mission-card {
+        padding: 34px 30px;
+    }
+}
+
+@media (max-width: 768px) {
+    .mission {
+        grid-template-columns: 1fr;
+        gap: 24px;
+        padding: 40px 22px;
+        border-radius: 20px;
+        margin: 40px 15px;
+    }
+
+    .mission::before {
+        border-radius: 20px 20px 0 0;
+    }
+
+    .mission-card {
+        padding: 30px 24px;
+    }
+
+    .mission-card h2 {
+        font-size: 24px;
+    }
+
+    .mission-card p {
+        font-size: 16px;
+        line-height: 1.8;
+    }
+}
+
+/* ---------- DARK MODE ---------- */
+body.dark-mode .mission {
+    background: var(--dm-surface);
+    border-color: var(--dm-border);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
+}
+
+body.dark-mode .mission::before {
+    background: linear-gradient(90deg, var(--dm-cyan), #0B3D91);
+}
+
+body.dark-mode .mission-card {
+    background: var(--dm-card);
+    border-color: var(--dm-border);
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.35);
+}
+
+body.dark-mode .mission-card h2 {
+    color: var(--dm-cyan);
+}
+
+body.dark-mode .mission-card p {
+    color: var(--dm-muted);
+}
+
+body.dark-mode .mission-card:hover {
+    border-color: rgba(0, 191, 255, 0.40);
+    box-shadow: 0 22px 44px rgba(0, 0, 0, 0.45);
+}
+/* ================================================================
+   PHASE 2B-13 — MISSION / VISION PREMIUM LIGHT
+   + STATS / CTA LIGHT-SURFACE RESTORATION (parity fix)
+
+   The legacy base rule `section:not(.hero)` applies a darkgrey box
+   (background: darkgrey; width:90%; max-width:1200px; margin:40px
+   auto; padding:25px; border-radius:10px; box-shadow) to every
+   <section>. Because that rule carries class+type specificity
+   (section:not(.hero)), it silently wins over the approved class
+   selectors (.stats, .cta, .mission) in LIGHT mode, so those panels
+   were not rendering their already-approved white premium surfaces.
+   (Dark mode is unaffected — body.dark-mode rules already win.)
+
+   These are strict, high-specificity, no-redesign overrides that
+   restore each panel's approved light surface (background, width,
+   max-width, margin, padding, border-radius, box-shadow) using
+   section.stats / section.cta / section.mission, which out-bind
+   section:not(.hero) by source order. HTML, JS, content and all
+   other sections are untouched.
+================================================================ */
+
+/* ---------- STATS — restore Phase 2B-11 approved light surface ---------- */
+section.stats {
+    width: auto;
+    max-width: 1240px;
+    margin: 60px auto;
+    padding: 64px 44px;
+    background: #ffffff;
+    border: 1px solid rgba(0, 48, 59, 0.08);
+    border-radius: 24px;
+    box-shadow: 0 12px 32px rgba(0, 48, 59, 0.08);
+}
+
+@media (max-width: 1280px) {
+    section.stats {
+        margin: 56px 20px;
+    }
+}
+
+@media (max-width: 1024px) and (min-width: 769px) {
+    section.stats {
+        padding: 54px 30px;
+        border-radius: 22px;
+    }
+}
+
+@media (max-width: 768px) {
+    section.stats {
+        padding: 40px 20px;
+        border-radius: 20px;
+        margin: 40px 15px;
+    }
+}
+
+/* ---------- CTA — restore Phase 2B-12 approved light surface ---------- */
+section.cta {
+    width: auto;
+    max-width: 1240px;
+    margin: 60px auto;
+    padding: 72px 44px;
+    background: #ffffff;
+    border: 1px solid rgba(0, 48, 59, 0.08);
+    border-radius: 24px;
+    box-shadow: 0 12px 32px rgba(0, 48, 59, 0.08);
+}
+
+@media (max-width: 1280px) {
+    section.cta {
+        margin: 56px 20px;
+    }
+}
+
+@media (max-width: 1024px) and (min-width: 769px) {
+    section.cta {
+        padding: 60px 30px;
+        border-radius: 22px;
+    }
+}
+
+@media (max-width: 768px) {
+    section.cta {
+        padding: 44px 22px;
+        border-radius: 20px;
+        margin: 40px 15px;
+    }
+}
+
+/* ---------- MISSION / VISION — premium light panel surface ---------- */
+section.mission {
+    width: auto;
+    max-width: 1240px;
+    margin: 60px auto;
+    padding: 64px 44px;
+    background: #ffffff;
+    border: 1px solid rgba(0, 48, 59, 0.08);
+    border-radius: 24px;
+    box-shadow: 0 12px 32px rgba(0, 48, 59, 0.08);
+}
+
+@media (max-width: 1280px) {
+    section.mission {
+        margin: 56px 20px;
+    }
+}
+
+@media (max-width: 1024px) and (min-width: 769px) {
+    section.mission {
+        padding: 54px 30px;
+        border-radius: 22px;
+    }
+}
+
+@media (max-width: 768px) {
+    section.mission {
+        padding: 40px 22px;
+        border-radius: 20px;
+        margin: 40px 15px;
+    }
+}
