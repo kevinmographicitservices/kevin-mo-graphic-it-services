@@ -14,7 +14,7 @@
      PRELOADER
 ========================== -->
 
-<div id="preloader">
+<div id="preloader" aria-hidden="true">
 
     <div class="loader-content">
 
@@ -108,8 +108,25 @@
 
 
     <!-- NAVIGATION LINKS -->
+    <!-- Off-canvas header (theme + close) — visible on mobile only -->
 
     <ul class="nav-links">
+
+        <li class="menu-header">
+
+            <button id="themeToggleMenu"
+                    class="theme-toggle menu-theme-toggle"
+                    aria-label="Toggle dark mode">
+                🌙
+            </button>
+
+            <button id="menuClose"
+                    class="menu-close"
+                    aria-label="Close menu">
+                ✕
+            </button>
+
+        </li>
 
         <li>
             <a href="#about" id="aboutBtn">
@@ -162,6 +179,12 @@
     </button>
 
 </nav>
+
+<!-- ==========================
+     MOBILE MENU BACKDROP
+========================== -->
+
+<div id="menuBackdrop" class="menu-backdrop" aria-hidden="true"></div>
 
 <section class="hero" id="home">
 

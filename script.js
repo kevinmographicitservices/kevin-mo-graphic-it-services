@@ -121,13 +121,57 @@ if (slides.length > 0) {
 
 const menuToggle = document.getElementById("menuToggle");
 
+const menuClose = document.getElementById("menuClose");
+
+const menuBackdrop = document.getElementById("menuBackdrop");
+
 const navLinks = document.querySelector(".nav-links");
 
 if (menuToggle && navLinks) {
 
-    menuToggle.addEventListener("click", function(){
+    function openMenu() {
 
-        navLinks.classList.toggle("active");
+        navLinks.classList.add("active");
+
+        if (menuBackdrop) menuBackdrop.classList.add("active");
+
+    }
+
+    function closeMenu() {
+
+        navLinks.classList.remove("active");
+
+        if (menuBackdrop) menuBackdrop.classList.remove("active");
+
+    }
+
+    // Hamburger opens / closes the drawer
+    menuToggle.addEventListener("click", function () {
+
+        if (navLinks.classList.contains("active")) {
+            closeMenu();
+        } else {
+            openMenu();
+        }
+
+    });
+
+    // Clean close control inside the drawer
+    if (menuClose) {
+        menuClose.addEventListener("click", closeMenu);
+    }
+
+    // Tap the visible page backdrop to dismiss
+    if (menuBackdrop) {
+        menuBackdrop.addEventListener("click", closeMenu);
+    }
+
+    // Escape key also dismisses the drawer
+    document.addEventListener("keydown", function (e) {
+
+        if (e.key === "Escape" && navLinks.classList.contains("active")) {
+            closeMenu();
+        }
 
     });
 
@@ -536,20 +580,42 @@ document.addEventListener("DOMContentLoaded", function () {
 // =========================================
 // PRELOADER
 // =========================================
+// Behaviour preserved: the loader hides on window "load" after the
+// same 1000ms delay as before. A failsafe only guarantees the loader
+// can never trap the page if the load event is delayed.
 
-window.addEventListener("load", function () {
+(function () {
 
     const preloader = document.getElementById("preloader");
 
     if (!preloader) return;
 
-    setTimeout(function () {
+    function hidePreloader() {
 
         preloader.classList.add("hide");
 
-   }, 1000);
+    }
 
-});
+    // Primary trigger (unchanged behaviour: fires once every asset has
+    // finished loading, then waits the same 1000ms as before).
+    window.addEventListener("load", function () {
+
+        setTimeout(hidePreloader, 1000);
+
+    });
+
+    // Failsafe: if the window "load" event is held up (slow third-party
+    // script, stalled asset), release the page after 7s regardless.
+    // It never fires earlier than the primary trigger would.
+    setTimeout(function () {
+
+        if (!preloader.classList.contains("hide")) {
+            hidePreloader();
+        }
+
+    }, 7000);
+
+})();
 // =========================================
 // SCROLL PROGRESS BAR
 // =========================================
@@ -581,6 +647,8 @@ mobileLinks.forEach(link => {
 
         navLinks.classList.remove("active");
 
+        if (menuBackdrop) menuBackdrop.classList.remove("active");
+
     });
 
 });
@@ -591,21 +659,25 @@ mobileLinks.forEach(link => {
 (function () {
     "use strict";
 
-    var themeToggle = document.getElementById("themeToggle");
+    // Supports both the navbar toggle and the off-canvas drawer toggle
+    var themeToggles = document.querySelectorAll(".theme-toggle");
 
-    if (!themeToggle) return;
+    if (!themeToggles.length) return;
 
     var STORAGE_KEY = "kmog_theme";
     var DARK_MODE = "dark-mode";
 
     function applyTheme(isDark) {
         document.body.classList.toggle(DARK_MODE, isDark);
-        themeToggle.textContent = isDark ? "☀️" : "🌙";
 
-        themeToggle.setAttribute(
-            "aria-label",
-            isDark ? "Switch to light mode" : "Switch to dark mode"
-        );
+        themeToggles.forEach(function (btn) {
+            btn.textContent = isDark ? "☀️" : "🌙";
+
+            btn.setAttribute(
+                "aria-label",
+                isDark ? "Switch to light mode" : "Switch to dark mode"
+            );
+        });
     }
 
     var saved = null;
@@ -622,13 +694,15 @@ mobileLinks.forEach(link => {
 
     applyTheme(isDark);
 
-    themeToggle.addEventListener("click", function () {
-        var nowDark = document.body.classList.toggle(DARK_MODE);
-        try {
-            localStorage.setItem(STORAGE_KEY, nowDark ? "dark" : "light");
-        } catch (e) {
-            /* storage unavailable (private mode) */
-        }
-        applyTheme(nowDark);
+    themeToggles.forEach(function (btn) {
+        btn.addEventListener("click", function () {
+            var nowDark = document.body.classList.toggle(DARK_MODE);
+            try {
+                localStorage.setItem(STORAGE_KEY, nowDark ? "dark" : "light");
+            } catch (e) {
+                /* storage unavailable (private mode) */
+            }
+            applyTheme(nowDark);
+        });
     });
 })();

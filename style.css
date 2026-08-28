@@ -6403,3 +6403,409 @@ body.dark-mode .process-step:hover {
     border-color: rgba(0, 191, 255, 0.40);
     box-shadow: 0 22px 44px rgba(0, 0, 0, 0.45);
 }
+/* ================================================================
+   PHASE 2C-1 — PREMIUM PRELOADER + BRAND LOCKUP SPACING
+   * Premium animated preloader: ambient glows, subtle technical
+     grid, logo entrance + shine sweep, dual-tone ring and an
+     indeterminate decorative sweep bar. No percentage is ever
+     shown and nothing in the loader claims to represent real
+     page-load progress.
+   * Brand lockup spacing refinements (CSS-only; the .logo markup
+     is unchanged — an <a> wrapper is not technically necessary
+     because the spacing/alignment is fully resolvable with CSS).
+   Overrides only; appended for zero-risk rollback.
+================================================================ */
+
+/* ----------------------------------------------------------------
+   PREMIUM PRELOADER
+---------------------------------------------------------------- */
+
+/* Deep premium backdrop */
+#preloader {
+    background: linear-gradient(165deg,
+                #04272e 0%,
+                #04202b 38%,
+                #031426 74%,
+                #041821 100%);
+    overflow: hidden;
+}
+
+/* Ambient cyan/blue glow layer */
+#preloader::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background:
+        radial-gradient(circle at 18% 16%, rgba(0, 191, 255, 0.16), transparent 46%),
+        radial-gradient(circle at 86% 24%, rgba(11, 61, 145, 0.30), transparent 52%);
+    animation: kmog-loader-pulse 3.4s ease-in-out infinite;
+    pointer-events: none;
+}
+
+@keyframes kmog-loader-pulse {
+    0%, 100% { opacity: 0.75; }
+    50%      { opacity: 1; }
+}
+
+/* Low-opacity technical grid + gold ground glow */
+#preloader::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='56' viewBox='0 0 56 56'%3E%3Cpath d='M56 0H0v56' fill='none' stroke='rgba(255,255,255,0.045)' stroke-width='1'/%3E%3C/svg%3E"),
+        radial-gradient(circle at 82% 80%, rgba(255, 215, 0, 0.07), transparent 52%);
+    background-size: 56px 56px, cover;
+    background-position: center, center;
+    pointer-events: none;
+}
+
+/* Keep the loader content above the decorative layers */
+.loader-content {
+    position: relative;
+    z-index: 1;
+}
+
+/* Logo entrance + soft brand glow */
+.loader-content img {
+    width: 118px;
+    height: 118px;
+    object-fit: contain;
+    margin-bottom: 22px;
+    filter: drop-shadow(0 0 26px rgba(0, 191, 255, 0.30))
+            drop-shadow(0 10px 22px rgba(0, 0, 0, 0.45));
+    animation: kmog-loader-logo-in 0.9s cubic-bezier(0.22, 0.68, 0.35, 1.15) both;
+}
+
+@keyframes kmog-loader-logo-in {
+    from { opacity: 0; transform: translateY(16px) scale(0.94); }
+    to   { opacity: 1; transform: none; }
+}
+
+/* Decorative shine sweep across the mark (pure motion, no meaning) */
+.loader-content::before {
+    content: "";
+    position: absolute;
+    top: 18px;
+    left: 50%;
+    width: 46px;
+    height: 84px;
+    background: linear-gradient(105deg,
+                rgba(255, 255, 255, 0) 0%,
+                rgba(255, 255, 255, 0.28) 50%,
+                rgba(255, 255, 255, 0) 100%);
+    border-radius: 8px;
+    transform: translateX(-50%) skewX(-18deg);
+    animation: kmog-loader-shine 2.2s ease-in-out infinite;
+    pointer-events: none;
+    z-index: 2;
+}
+
+@keyframes kmog-loader-shine {
+    0%       { transform: translateX(-150px) skewX(-18deg); opacity: 0; }
+    22%      { opacity: 0.9; }
+    72%, 100% { transform: translateX(150px) skewX(-18deg); opacity: 0; }
+}
+
+/* Brand title entrance */
+.loader-content h2 {
+    color: #ffffff;
+    font-size: 27px;
+    letter-spacing: 1px;
+    text-shadow: 0 6px 24px rgba(0, 0, 0, 0.35);
+    margin-bottom: 26px;
+    animation: kmog-loader-title-in 1.15s ease 0.15s both;
+}
+
+/* Remove the legacy generic h2 underline inside the loader */
+.loader-content h2::after {
+    display: none;
+}
+
+@keyframes kmog-loader-title-in {
+    from { opacity: 0; transform: translateY(12px); filter: blur(3px); }
+    to   { opacity: 1; transform: none; filter: blur(0); }
+}
+
+/* Dual-tone premium ring */
+.loader {
+    width: 60px;
+    height: 60px;
+    border: 4px solid rgba(255, 255, 255, 0.08);
+    border-top-color: #00BFFF;
+    border-right-color: rgba(255, 215, 0, 0.85);
+    border-bottom-color: rgba(255, 255, 255, 0.10);
+    border-left-color: rgba(0, 191, 255, 0.35);
+    border-radius: 50%;
+    margin: 0 auto;
+    box-shadow: 0 0 24px rgba(0, 191, 255, 0.35),
+                inset 0 0 10px rgba(0, 191, 255, 0.10);
+    animation: kmog-loader-spin 1.05s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+}
+
+@keyframes kmog-loader-spin {
+    to { transform: rotate(360deg); }
+}
+
+/* Indeterminate sweep bar — decorative treatment only. It is never
+   labelled, never shows a number and never claims to represent real
+   page-load progress. */
+.loader-content::after {
+    content: "";
+    display: block;
+    width: 224px;
+    max-width: 64vw;
+    height: 3px;
+    margin: 30px auto 0;
+    border-radius: 20px;
+    background-color: rgba(255, 255, 255, 0.08);
+    background-image: linear-gradient(90deg,
+        rgba(0, 191, 255, 0) 0%,
+        rgba(0, 191, 255, 0.9) 50%,
+        rgba(255, 215, 0, 0.45) 100%);
+    background-size: 45% 100%;
+    background-repeat: no-repeat;
+    background-position: -48% 0;
+    overflow: hidden;
+    animation: kmog-loader-sweep 1.5s ease-in-out infinite;
+}
+
+@keyframes kmog-loader-sweep {
+    0%   { background-position: -48% 0; }
+    100% { background-position: 148% 0; }
+}
+
+/* Preloader responsive sizing */
+@media (max-width: 768px) {
+    .loader-content img {
+        width: 92px;
+        height: 92px;
+        margin-bottom: 18px;
+    }
+
+    .loader-content h2 {
+        font-size: 20px;
+        letter-spacing: 0.6px;
+        margin-bottom: 22px;
+    }
+
+    .loader-content::before {
+        top: 14px;
+        height: 70px;
+    }
+
+    .loader {
+        width: 52px;
+        height: 52px;
+        border-width: 4px;
+    }
+
+    .loader-content::after {
+        width: 180px;
+        margin-top: 26px;
+    }
+}
+
+/* ----------------------------------------------------------------
+   BRAND LOCKUP SPACING (navbar)
+   Pure CSS spacing polish. The existing .logo markup is kept exactly
+   as-is; a new <a> wrapper is not technically necessary here since
+   the spacing/alignment is fully resolvable with CSS.
+---------------------------------------------------------------- */
+
+#navbar .logo {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin: 0;
+    padding: 0;
+    flex-shrink: 0;
+}
+
+#navbar .logo img {
+    width: 108px;
+    height: 80px;
+    display: block;
+    object-fit: contain;
+    border-radius: 6px;
+}
+
+#navbar .brand-text {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: left;
+}
+
+#navbar .brand-text h2 {
+    color: #ffffff;
+    font-size: 27px;
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: 0.4px;
+    margin: 0;
+}
+
+#navbar .brand-text span {
+    color: #00aaff;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 1.1px;
+    margin-top: 5px;
+}
+
+@media (max-width: 1024px) and (min-width: 769px) {
+    #navbar .logo { gap: 11px; }
+    #navbar .brand-text h2 { font-size: 24px; }
+    #navbar .brand-text span { font-size: 12.5px; letter-spacing: 1px; }
+}
+
+@media (max-width: 768px) {
+    #navbar .logo { gap: 10px; }
+    #navbar .logo img { width: 65px; height: 55px; }
+    #navbar .brand-text h2 { font-size: 22px; }
+    #navbar .brand-text span { font-size: 11px; letter-spacing: 0.8px; margin-top: 4px; }
+}
+/* ================================================================
+   PHASE 2C-2 — PARTIAL-WIDTH OFF-CANVAS MOBILE MENU
+   * Drawer opens from the left at ~78% viewport width; the rest of
+     the page stays visible behind a backdrop scrim.
+   * d67df42 overflow protection is preserved EXACTLY: the menu keeps
+     transform: translateX(-100%) (hidden) and transform: translateX(0)
+     (active), and the html/body rule stays margin:0; overflow-x:hidden;
+     Those existing rules are untouched — only width + polish are
+     appended here.
+   * Theme toggle moves into the drawer header (upper-left); a clean
+     close control sits at the upper-right. Brand lockup spacing from
+     Phase 2C-1 is untouched.
+   Overrides only; appended for zero-risk rollback.
+================================================================ */
+
+/* ---------- OFF-CANVAS HEADER: hidden on desktop ---------- */
+#navbar .nav-links .menu-header {
+    display: none;
+}
+
+/* ---------- BACKDROP SCM over the visible page ---------- */
+.menu-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(2, 12, 22, 0.62);
+    backdrop-filter: blur(3px);
+    -webkit-backdrop-filter: blur(3px);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.45s ease, visibility 0.45s ease;
+    z-index: 1039; /* below #navbar (1040), above page content */
+    pointer-events: none;
+}
+
+.menu-backdrop.active {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+}
+
+/* ---------- OFF-CANVAS DRAWER (mobile only) ---------- */
+@media (max-width: 768px) {
+
+    #navbar .nav-links {
+        width: 78vw; /* ~78% of viewport — part of the page stays visible */
+        left: 0;
+        background: linear-gradient(180deg, #061b2e 0%, #031426 100%);
+        border-right: 1px solid rgba(0, 191, 255, 0.18);
+        box-shadow: 18px 0 46px rgba(0, 0, 0, 0.45);
+        padding: 18px 18px 34px;
+        gap: 8px;
+        transition: transform 0.45s cubic-bezier(0.22, 0.61, 0.36, 1);
+        overscroll-behavior: contain;
+    }
+
+    #navbar .nav-links .menu-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+        margin-bottom: 10px;
+        padding: 2px 0 14px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    #navbar .nav-links .menu-theme-toggle,
+    #navbar .nav-links .menu-close {
+        width: 42px;
+        height: 42px;
+        padding: 0;
+        border-radius: 50%;
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        background: rgba(255, 255, 255, 0.06);
+        color: #ffffff;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        line-height: 1;
+        transition: background 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
+    }
+
+    #navbar .nav-links .menu-theme-toggle {
+        margin-left: 4px;
+        font-size: 18px;
+    }
+
+    #navbar .nav-links .menu-close {
+        margin-right: 4px;
+        font-size: 22px;
+    }
+
+    #navbar .nav-links .menu-theme-toggle:hover,
+    #navbar .nav-links .menu-close:hover {
+        background: rgba(0, 191, 255, 0.16);
+        border-color: #00BFFF;
+        transform: scale(1.06);
+    }
+
+    /* The drawer header now owns the toggle; keep it out of the
+       top header bar (re-hides what a later rule had re-shown). */
+    #navbar .theme-toggle {
+        display: none;
+    }
+
+    /* Entry stagger for the drawer items (open only; close stays snappy) */
+    #navbar .nav-links.active li {
+        animation: kmog-menu-item-in 0.4s ease backwards;
+    }
+
+    #navbar .nav-links.active li:nth-child(2) { animation-delay: 0.05s; }
+    #navbar .nav-links.active li:nth-child(3) { animation-delay: 0.10s; }
+    #navbar .nav-links.active li:nth-child(4) { animation-delay: 0.15s; }
+    #navbar .nav-links.active li:nth-child(5) { animation-delay: 0.20s; }
+    #navbar .nav-links.active li:nth-child(6) { animation-delay: 0.25s; }
+    #navbar .nav-links.active li:nth-child(7) { animation-delay: 0.30s; }
+}
+
+@keyframes kmog-menu-item-in {
+    from {
+        opacity: 0;
+        transform: translateX(-14px);
+    }
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+/* ---------- DARK MODE: drawer surface stays on-brand ---------- */
+body.dark-mode #navbar .nav-links {
+    background: linear-gradient(180deg, #0d2a3b 0%, #06202e 100%);
+    border-right-color: rgba(0, 191, 255, 0.25);
+}
