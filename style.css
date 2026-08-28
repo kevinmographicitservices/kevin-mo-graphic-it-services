@@ -6177,3 +6177,229 @@ section.mission {
         margin: 40px 15px;
     }
 }
+
+/* ================================================================
+   PHASE 2B-14 — PREMIUM LIGHT PROCESS SECTION
+   Premium light/white Process panel (eyebrow + heading + 4 numbered
+   step cards) with full dark-mode support, consistent with the
+   approved Stats (2B-11), CTA (2B-12), Mission/Vision (2B-13),
+   About and Contact premium light panels.
+
+   Also resets the legacy #process collapse placeholder (height:0 /
+   visibility:hidden) so the section actually renders.
+
+   Scoped purely to #process / .process-* (panel shell, heading,
+   step grid and step cards). Existing Process content, HTML, step
+   numbering and functionality are untouched. CSS-only, appended for
+   zero-risk rollback. The d67df42 mobile overflow fix (hamburger
+   translateX transform + body margin/overflow-x) is left intact.
+=============================================================== */
+
+/* ---------- RESET LEGACY #process COLLAPSE RULE ---------- */
+#process {
+    height: auto;
+    visibility: visible;
+    overflow: visible;
+}
+
+/* ---------- PREMIUM PANEL SHELL ---------- */
+section.process {
+    position: relative;
+    width: auto;
+    max-width: 1240px;
+    margin: 60px auto;
+    padding: 60px 44px;
+    background: #ffffff;
+    border: 1px solid rgba(0, 48, 59, 0.08);
+    border-radius: 24px;
+    box-shadow: 0 12px 32px rgba(0, 48, 59, 0.08);
+    box-sizing: border-box;
+    color: #00303B;
+    text-align: center;
+}
+
+/* premium gradient accent along the top edge */
+section.process::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 6px;
+    background: linear-gradient(90deg, #00BFFF, #0B3D91);
+    border-radius: 24px 24px 0 0;
+}
+
+/* ---------- PANEL HEAD ---------- */
+#process .section-eyebrow {
+    display: block;
+    width: fit-content;
+    margin: 0 auto 18px;
+    color: #0B3D91;
+    background: rgba(0, 191, 255, 0.10);
+    border-color: rgba(0, 191, 255, 0.30);
+}
+
+#process h2 {
+    color: #0B3D91;
+    font-size: clamp(30px, 3.2vw, 40px);
+    font-weight: 800;
+    line-height: 1.15;
+    margin: 0 0 42px;
+}
+
+/* ---------- PROCESS STEP GRID ---------- */
+.process-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px 30px;
+    max-width: 100%;
+    margin: 0;
+    text-align: left;
+}
+
+/* ---------- PREMIUM LIGHT PROCESS STEP CARD ---------- */
+.process-step {
+    background: #f4fafc;
+    border: 1px solid rgba(0, 48, 59, 0.08);
+    border-radius: 18px;
+    padding: 30px 24px;
+    box-shadow: 0 10px 28px rgba(0, 48, 59, 0.08);
+    transition: transform .35s ease, box-shadow .35s ease, border-color .35s ease;
+}
+
+.process-step:hover {
+    transform: translateY(-6px);
+    border-color: rgba(0, 191, 255, 0.30);
+    box-shadow: 0 22px 44px rgba(0, 191, 255, 0.18);
+}
+
+/* ---------- STEP NUMBER ---------- */
+.step-number {
+    font-size: 38px;
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: 0.5px;
+    color: rgba(0, 191, 255, 0.45);
+    margin-bottom: 16px;
+}
+
+/* ---------- STEP CARD TYPOGRAPHY ---------- */
+.process-step .step-body h3 {
+    color: #0B3D91;
+    font-size: 20px;
+    font-weight: 800;
+    margin: 0 0 10px;
+}
+
+.process-step .step-body p {
+    color: #3f5666;
+    font-size: 15px;
+    line-height: 1.75;
+    margin: 0;
+}
+
+/* ---------- RESPONSIVE ---------- */
+@media (max-width: 1280px) {
+    section.process {
+        margin: 56px 20px;
+    }
+}
+
+@media (max-width: 1024px) and (min-width: 769px) {
+    section.process {
+        padding: 52px 30px;
+        border-radius: 22px;
+    }
+
+    section.process::before {
+        border-radius: 22px 22px 0 0;
+    }
+
+    .process-container {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 24px;
+    }
+
+    .process-step {
+        padding: 28px 24px;
+    }
+}
+
+@media (max-width: 768px) {
+    section.process {
+        padding: 44px 22px;
+        border-radius: 20px;
+        margin: 40px 15px;
+    }
+
+    section.process::before {
+        border-radius: 20px 20px 0 0;
+    }
+
+    #process h2 {
+        font-size: 30px;
+        margin-bottom: 32px;
+    }
+
+    .process-container {
+        grid-template-columns: 1fr;
+        gap: 18px;
+    }
+
+    .process-step {
+        padding: 26px 22px;
+    }
+
+    .step-number {
+        font-size: 34px;
+    }
+
+    .process-step .step-body h3 {
+        font-size: 19px;
+    }
+}
+
+/* ---------- DARK MODE ---------- */
+body.dark-mode section.process {
+    background: var(--dm-surface);
+    border-color: var(--dm-border);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
+}
+
+body.dark-mode section.process::before {
+    background: linear-gradient(90deg, var(--dm-cyan), #0B3D91);
+}
+
+body.dark-mode #process .section-eyebrow {
+    color: var(--dm-cyan);
+    background: rgba(0, 191, 255, 0.10);
+    border-color: rgba(0, 191, 255, 0.40);
+}
+
+body.dark-mode #process h2 {
+    color: var(--dm-text);
+}
+
+body.dark-mode .process-step {
+    background: var(--dm-card);
+    border-color: var(--dm-border);
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.35);
+}
+
+body.dark-mode .step-number {
+    color: var(--dm-gold);
+}
+
+body.dark-mode .process-step .step-body h3 {
+    color: var(--dm-cyan);
+}
+
+body.dark-mode .process-step .step-body p {
+    color: var(--dm-muted);
+}
+
+body.dark-mode .process-step:hover {
+    border-color: rgba(0, 191, 255, 0.40);
+    box-shadow: 0 22px 44px rgba(0, 0, 0, 0.45);
+}
