@@ -6809,3 +6809,289 @@ body.dark-mode #navbar .nav-links {
     background: linear-gradient(180deg, #0d2a3b 0%, #06202e 100%);
     border-right-color: rgba(0, 191, 255, 0.25);
 }
+/* ================================================================
+   PHASE 2C-3 — 4-SLIDE HERO CAROUSEL
+   4 new hero images (hero-slide-1..4.jpg), crossfade + subtle
+   Ken Burns, arrows on desktop/tablet, dots on all devices,
+   autoplay with hover/tab/reduced-motion handling, and a
+   per-slide typewriter. The Featured Projects slider and its
+   hero1-4.jpg images are untouched. The d67df42 mobile overflow
+   protection (html/body overflow-x:hidden) is preserved exactly.
+   Overrides only; appended for zero-risk rollback.
+================================================================ */
+
+/* ---------- CAROUSEL LAYER ---------- */
+.hero {
+    position: relative;
+}
+
+.hero-slider {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    overflow: hidden;
+}
+
+.hero-glow {
+    z-index: 0;
+}
+
+.hero-slider ~ .overlay.hero-overlay {
+    position: relative;
+    z-index: 2;
+    background: transparent;
+    /* let clicks fall through to the arrows / dots underneath */
+    pointer-events: none;
+}
+
+/* interactive hero elements stay clickable */
+.hero-slider ~ .overlay.hero-overlay .hero-buttons a {
+    pointer-events: auto;
+}
+
+/* keep the badge text white (legacy `.hero-badge span` is cyan) */
+.hero-badge .hero-badge-text {
+    color: #ffffff;
+}
+
+/* reset the legacy #typing block sizing for the per-slide phrases */
+.hero-type #typing {
+    font-size: inherit !important;
+    min-height: 0 !important;
+    width: auto !important;
+    max-width: none !important;
+}
+
+/* ---------- SLIDES: crossfade + subtle Ken Burns ---------- */
+.hero-slides {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.hero-slides .hero-slide {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    opacity: 0;
+    transition: opacity 1.1s ease;
+    will-change: transform;
+}
+
+.hero-slides .hero-slide.active {
+    opacity: 1;
+    animation: kmog-kenburns 8s ease-out forwards;
+}
+
+@keyframes kmog-kenburns {
+    from { transform: scale(1); }
+    to   { transform: scale(1.06); }
+}
+
+/* ---------- TEXT-SAFETY SCRIM ---------- */
+.hero-scrim {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    pointer-events: none;
+}
+
+.hero-slider .hero-scrim {
+    background: linear-gradient(100deg,
+                rgba(3, 10, 20, 0.88) 0%,
+                rgba(3, 10, 20, 0.55) 42%,
+                rgba(0, 0, 0, 0.18) 68%,
+                transparent 100%);
+}
+
+/* ---------- ARROWS: desktop & tablet only ---------- */
+.hero-arrow {
+    position: absolute;
+    top: 48%;
+    transform: translateY(-50%);
+    z-index: 3;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    background: rgba(3, 16, 26, 0.45);
+    color: #ffffff;
+    font-size: 24px;
+    line-height: 1;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    transition: background 0.3s ease, border-color 0.3s ease;
+}
+
+.hero-arrow-prev { left: 12px; }
+.hero-arrow-next { right: 12px; }
+
+.hero-arrow:hover,
+.hero-arrow:focus-visible {
+    background: #00BFFF;
+    border-color: #00BFFF;
+}
+
+.hero-arrow:focus-visible {
+    outline: 2px solid #00BFFF;
+    outline-offset: 2px;
+}
+
+/* keep hero copy out from under the arrows on wide screens */
+@media (min-width: 769px) {
+    .hero-slider ~ .overlay.hero-overlay {
+        padding: 40px 56px;
+    }
+}
+
+/* ---------- DOTS: all devices ---------- */
+.hero-dots {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 16px;
+    z-index: 3;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    pointer-events: none;
+}
+
+.hero-dot {
+    width: 10px;
+    height: 10px;
+    padding: 0;
+    border: 0;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.42);
+    cursor: pointer;
+    transition: width 0.3s ease, background 0.3s ease;
+    pointer-events: auto;
+}
+
+.hero-dot.active {
+    width: 26px;
+    background: #00BFFF;
+    box-shadow: 0 0 10px rgba(0, 191, 255, 0.8);
+}
+
+/* scroll cue only when the carousel is present (avoids collision) */
+.hero-slider ~ .scroll-cue {
+    display: none;
+}
+
+/* ---------- MOBILE: image stays visible, text in darker area ---------- */
+@media (max-width: 768px) {
+
+    .hero {
+        justify-content: flex-end;
+        min-height: clamp(520px, 86vh, 640px);
+        padding: 96px 0 0;
+    }
+
+    .hero-arrow {
+        display: none;
+    }
+
+    .hero-slider .hero-scrim {
+        background: linear-gradient(180deg,
+                    rgba(0, 0, 0, 0.02) 0%,
+                    rgba(0, 0, 0, 0.10) 38%,
+                    rgba(2, 10, 18, 0.72) 68%,
+                    rgba(2, 10, 18, 0.94) 100%);
+    }
+
+    .hero-slider ~ .overlay.hero-overlay {
+        width: 100%;
+        max-width: none;
+        margin: auto 0 0;
+        text-align: left;
+        padding: 26px 20px 52px; /* 52px reserves the dots row */
+        background: none;
+        border-radius: 0;
+    }
+
+    .overlay.hero-overlay h1 {
+        font-size: clamp(30px, 8vw, 40px);
+        margin: 0 0 14px;
+    }
+
+    .hero-type {
+        font-size: 17px;
+        margin: 0 0 18px;
+    }
+
+    .hero-type #typing {
+        font-size: clamp(20px, 6vw, 26px) !important;
+        width: auto !important;
+        max-width: 100% !important;
+    }
+
+    .hero-slider ~ .overlay.hero-overlay p {
+        margin: 0 0 20px;
+    }
+
+    .hero-buttons {
+        flex-direction: column;
+        align-items: flex-start;
+        width: 100%;
+    }
+
+    .hero-buttons .btn {
+        width: 100%;
+        max-width: 320px;
+        min-width: 0;
+        padding: 14px 20px;
+    }
+
+    .hero-trust {
+        font-size: 13px;
+        gap: 6px 0;
+        margin-top: 24px;
+    }
+
+    .hero-trust li {
+        padding: 0 10px;
+    }
+
+    .hero-trust strong {
+        font-size: 15px;
+    }
+
+    .hero-glow {
+        display: none;
+    }
+}
+
+/* ---------- DARK MODE ---------- */
+body.dark-mode .hero-dot.active {
+    background: var(--dm-cyan);
+}
+
+body.dark-mode .hero-arrow:hover,
+body.dark-mode .hero-arrow:focus-visible {
+    background: var(--dm-cyan);
+    border-color: var(--dm-cyan);
+}
+
+body.dark-mode .overlay.hero-overlay .hero-badge-text {
+    color: #ffffff;
+}
+
+/* ---------- REDUCED MOTION ---------- */
+@media (prefers-reduced-motion: reduce) {
+    .hero-slide {
+        transition: opacity 0.4s ease;
+    }
+
+    .hero-slide.active {
+        animation: none;
+    }
+}

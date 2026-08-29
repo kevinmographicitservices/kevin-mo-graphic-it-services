@@ -535,6 +535,11 @@ window.addEventListener("scroll", function(){
 
 document.addEventListener("DOMContentLoaded", function () {
 
+    // PHASE 2C-3: when the hero carousel is present it owns #typing
+    // and restarts the typewriter for every slide; the legacy loop
+    // below remains as the no-carousel fallback.
+    if (document.querySelector(".hero-slides")) return;
+
     const words = [
         "With Graphic Design.",
         "With Powerful Branding.",
@@ -706,3 +711,252 @@ mobileLinks.forEach(link => {
         });
     });
 })();
+// =========================================
+// PHASE 2C-3 — HERO CAROUSEL
+// Crossfade + subtle Ken Burns, arrows on
+// desktop/tablet, dots on all devices,
+// autoplay with hover / tab / reduced-motion
+// handling, and a per-slide typewriter that
+// restarts for every slide. The Featured
+// Projects .slider-wrapper crossfade and its
+// hero1-4.jpg images are untouched.
+// =========================================
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    var slider = document.querySelector(".hero-slider");
+    var slides = document.querySelectorAll(".hero-slides .hero-slide");
+
+    if (!slider || slides.length < 2) return;
+
+    var dotsWrap = slider.querySelector(".hero-dots");
+    var prevBtn = slider.querySelector(".hero-arrow-prev");
+    var nextBtn = slider.querySelector(".hero-arrow-next");
+
+    var badgeText = document.getElementById("heroBadgeText");
+    var subEl = document.getElementById("heroSub");
+    var typeEl = document.getElementById("typing");
+    var ctaPrimary = document.getElementById("heroCtaPrimary");
+    var ctaSecondary = document.getElementById("heroCtaSecondary");
+
+    var slideData = [
+        {
+            badge: "GRAPHIC DESIGN",
+            type: "Design that sells.",
+            sub: "Logos, flyers and brand identity crafted to make your business look professional and memorable.",
+            primary: "Start a Project",
+            primaryHref: "#contact",
+            secondary: "View Our Work",
+            secondaryHref: "#portfolio"
+        },
+        {
+            badge: "BRANDING",
+            type: "Powerful branding.",
+            sub: "Complete identity systems — colour, typography and creative direction that build trust.",
+            primary: "Request a Quote",
+            primaryHref: "#contact",
+            secondary: "Explore Branding",
+            secondaryHref: "#portfolio"
+        },
+        {
+            badge: "WEB DEVELOPMENT",
+            type: "Modern websites.",
+            sub: "Fast, responsive websites engineered to grow your business and win customers online.",
+            primary: "Build My Website",
+            primaryHref: "#contact",
+            secondary: "See Our Work",
+            secondaryHref: "#portfolio"
+        },
+        {
+            badge: "IT SOLUTIONS",
+            type: "Smart IT solutions.",
+            sub: "Reliable IT support and digital tools that keep your operations running smoothly.",
+            primary: "Get IT Support",
+            primaryHref: "#contact",
+            secondary: "Our Services",
+            secondaryHref: "#services"
+        }
+    ];
+
+    var currentIndex = 0;
+
+    var timer = null;
+    var typeTimer = null;
+    var typeState = null;
+
+    var reduceMotion = window.matchMedia &&
+        window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    // ---------- TYPEWRITER (restarts per slide) ----------
+    function stopTypewriter() {
+        if (typeTimer) clearTimeout(typeTimer);
+        typeTimer = null;
+        typeState = null;
+    }
+
+    function typeStep() {
+        if (!typeState || !typeEl) return;
+
+        var s = typeState;
+
+        if (s.phase === "typing") {
+            s.i++;
+            typeEl.textContent = s.phrase.substring(0, s.i);
+
+            if (s.i >= s.phrase.length) {
+                s.phase = "hold";
+                typeTimer = setTimeout(typeStep, 2000);
+            } else {
+                typeTimer = setTimeout(typeStep, 55);
+            }
+        } else if (s.phase === "hold") {
+            s.phase = "deleting";
+            typeTimer = setTimeout(typeStep, 40);
+        } else if (s.phase === "deleting") {
+            s.i--;
+            typeEl.textContent = s.phrase.substring(0, s.i);
+
+            if (s.i > 0) {
+                typeTimer = setTimeout(typeStep, 40);
+            }
+        }
+    }
+
+    function startTypewriter(phrase) {
+        stopTypewriter();
+        if (!typeEl) return;
+
+        typeEl.textContent = "";
+        typeState = { phrase: phrase, i: 0, phase: "typing" };
+        typeTimer = setTimeout(typeStep, 55);
+    }
+
+    // ---------- SLIDE SWAP ----------
+    function goToSlide(index) {
+        var total = slides.length;
+        currentIndex = ((index % total) + total) % total;
+
+        slides.forEach(function (img, i) {
+            var active = i === currentIndex;
+            img.classList.toggle("active", active);
+            img.setAttribute("aria-hidden", active ? "false" : "true");
+        });
+
+        dots.forEach(function (dot, i) {
+            dot.classList.toggle("active", i === currentIndex);
+            dot.setAttribute("aria-selected", i === currentIndex ? "true" : "false");
+            dot.tabIndex = i === currentIndex ? 0 : -1;
+        });
+
+        var data = slideData[currentIndex];
+
+        if (badgeText) badgeText.textContent = data.badge;
+        if (subEl) subEl.textContent = data.sub;
+
+        if (ctaPrimary) {
+            ctaPrimary.setAttribute("href", data.primaryHref);
+            ctaPrimary.innerHTML = data.primary + ' <span>→</span>';
+        }
+
+        if (ctaSecondary) {
+            ctaSecondary.setAttribute("href", data.secondaryHref);
+            ctaSecondary.textContent = data.secondary;
+        }
+
+        startTypewriter(data.type);
+    }
+
+    // ---------- AUTOPLAY ----------
+    function startAutoplay() {
+        if (reduceMotion) return;
+
+        stopAutoplay();
+
+        timer = setInterval(function () {
+            goToSlide(currentIndex + 1);
+        }, 6000);
+    }
+
+    function stopAutoplay() {
+        if (timer) clearInterval(timer);
+        timer = null;
+    }
+
+    // ---------- DOTS (built by JS) ----------
+    var dots = [];
+
+    slides.forEach(function (img, i) {
+        var dot = document.createElement("button");
+        dot.type = "button";
+        dot.className = "hero-dot" + (i === 0 ? " active" : "");
+        dot.setAttribute("role", "tab");
+        dot.setAttribute("aria-label", "Go to slide " + (i + 1));
+        dot.setAttribute("aria-selected", i === 0 ? "true" : "false");
+        dot.setAttribute("data-hero-dot", i);
+
+        dot.addEventListener("click", function () {
+            goToSlide(i);
+            startAutoplay();
+        });
+
+        if (dotsWrap) dotsWrap.appendChild(dot);
+        dots.push(dot);
+    });
+
+    // ---------- ARROWS ----------
+    if (prevBtn) {
+        prevBtn.addEventListener("click", function () {
+            goToSlide(currentIndex - 1);
+            startAutoplay();
+        });
+    }
+
+    if (nextBtn) {
+        nextBtn.addEventListener("click", function () {
+            goToSlide(currentIndex + 1);
+            startAutoplay();
+        });
+    }
+
+    // ---------- PAUSE ON HOVER / FOCUS ----------
+    slider.addEventListener("mouseenter", stopAutoplay);
+    slider.addEventListener("mouseleave", startAutoplay);
+
+    slider.addEventListener("focusin", stopAutoplay);
+    slider.addEventListener("focusout", function () {
+        if (!slider.contains(document.activeElement)) {
+            startAutoplay();
+        }
+    });
+
+    // ---------- PAUSE ON HIDDEN TAB ----------
+    document.addEventListener("visibilitychange", function () {
+        if (document.hidden) {
+            stopAutoplay();
+        } else {
+            startAutoplay();
+        }
+    });
+
+    // ---------- KEYBOARD NAVIGATION ----------
+    slider.addEventListener("keydown", function (e) {
+        if (e.key === "ArrowLeft") {
+            e.preventDefault();
+            goToSlide(currentIndex - 1);
+            startAutoplay();
+        } else if (e.key === "ArrowRight") {
+            e.preventDefault();
+            goToSlide(currentIndex + 1);
+            startAutoplay();
+        }
+    });
+
+    // ---------- INIT ----------
+    slides.forEach(function (img, i) {
+        img.setAttribute("aria-hidden", i === 0 ? "false" : "true");
+    });
+
+    goToSlide(0);
+    startAutoplay();
+
+});

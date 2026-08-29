@@ -190,22 +190,82 @@
 
     <div class="hero-glow" aria-hidden="true"></div>
 
-    <div class="overlay hero-overlay">
+    <!-- ==========================
+         PHASE 2C-3 — HERO CAROUSEL
+    ========================== -->
+
+    <div class="hero-slider" id="heroSlider"
+         aria-roledescription="carousel"
+         aria-label="Our services">
+
+        <div class="hero-slides">
+
+            <img class="hero-slide active"
+                 src="assets/hero-slide-1.jpg"
+                 alt="Professional graphic design by Kevin M.O"
+                 fetchpriority="high"
+                 decoding="async">
+
+            <img class="hero-slide"
+                 src="assets/hero-slide-2.jpg"
+                 alt="Complete brand identity design"
+                 loading="lazy"
+                 decoding="async">
+
+            <img class="hero-slide"
+                 src="assets/hero-slide-3.jpg"
+                 alt="Modern business website design"
+                 loading="lazy"
+                 decoding="async">
+
+            <img class="hero-slide"
+                 src="assets/hero-slide-4.jpg"
+                 alt="IT support and digital solutions"
+                 loading="lazy"
+                 decoding="async">
+
+        </div>
+
+        <!-- text-safety scrim (darker zone for the copy) -->
+        <div class="hero-scrim" aria-hidden="true"></div>
+
+        <!-- arrows: desktop & tablet only (hidden on mobile via CSS) -->
+        <button type="button" class="hero-arrow hero-arrow-prev"
+                data-hero-arrow="prev" aria-label="Previous slide">
+            &#8249;
+        </button>
+
+        <button type="button" class="hero-arrow hero-arrow-next"
+                data-hero-arrow="next" aria-label="Next slide">
+            &#8250;
+        </button>
+
+        <!-- dots: all devices (built by JS) -->
+        <div class="hero-dots" role="tablist" aria-label="Choose slide"></div>
+
+    </div>
+
+    <div class="overlay hero-overlay" aria-live="polite">
 
         <div class="hero-badge">
             <span class="dot" aria-hidden="true"></span>
-            GRAPHIC DESIGN · BRANDING · WEB · IT
+            <span class="hero-badge-text" id="heroBadgeText">
+                GRAPHIC DESIGN · BRANDING · WEB · IT
+            </span>
         </div>
 
         <h1>
-            We Make Your Business
+            <span id="heroHeadline">We Make Your Business</span>
             <br>
-            <span class="accent">Stand Out.</span>
+            <span class="accent" id="heroAccent">Stand Out.</span>
         </h1>
 
-        <p class="hero-type"><span id="typing"></span></p>
+        <!-- aria-hidden: the typewriter re-states slide copy already
+             conveyed by the badge/subtitle; hiding it from the live
+             region avoids per-character screen-reader announcements -->
+        <p class="hero-type" aria-hidden="true"><span id="typing"></span></p>
 
-        <p class="hero-sub">
+        <p class="hero-sub" id="heroSub">
             Graphic design, branding, websites and digital solutions
             engineered to help your business look professional,
             stand out and grow.
@@ -213,12 +273,12 @@
 
         <div class="hero-buttons">
 
-            <a href="#contact" class="btn btn-hero">
+            <a href="#contact" class="btn btn-hero" id="heroCtaPrimary">
                 Start a Project
                 <span>→</span>
             </a>
 
-            <a href="#portfolio" class="btn btn-hero-outline">
+            <a href="#portfolio" class="btn btn-hero-outline" id="heroCtaSecondary">
                 View Our Work
             </a>
 
