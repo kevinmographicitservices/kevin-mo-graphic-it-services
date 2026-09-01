@@ -7296,3 +7296,230 @@ body.dark-mode section#services::before {
 body.dark-mode #services h2 {
     color: var(--dm-text);
 }
+/* ================================================================
+   PHASE 2C-5 — PREMIUM LIGHT FOOTER PANEL
+   Premium light/white Footer panel with full dark-mode support,
+   mirroring the approved premium shell from Stats 2B-11 and the
+   Services panel 2C-4: white surface, top gradient accent, rounded
+   corners, soft shadow, same spacing / radius / card values. Scoped
+   purely to the <footer> and its existing .footer-container /
+   .footer-box / .copyright classes — all footer content, links,
+   HTML structure and interactions are untouched.
+   CSS-only, overrides only, appended for zero-risk rollback.
+================================================================ */
+
+/* ---------- PREMIUM PANEL SHELL (mirrors Stats 2B-11 / 2C-4) ---------- */
+footer {
+    position: relative;
+    width: auto;
+    max-width: 1240px;
+    margin: 60px auto;
+    padding: 64px 44px;
+    background: #ffffff;
+    border: 1px solid rgba(0, 48, 59, 0.08);
+    border-radius: 24px;
+    box-shadow: 0 12px 32px rgba(0, 48, 59, 0.08);
+    box-sizing: border-box;
+    color: #00303B;
+}
+
+/* premium gradient accent along the top edge */
+footer::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 6px;
+    background: linear-gradient(90deg, #00BFFF, #0B3D91);
+    border-radius: 24px 24px 0 0;
+    pointer-events: none;
+}
+
+/* ---------- FOOTER BOX GRID (mirrors Stats 2B-11 grid) ---------- */
+footer .footer-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 40px 30px;
+}
+
+/* ---------- PREMIUM LIGHT FOOTER BOX HEADING (mirrors Mission/Vision 2B-13) ---------- */
+footer .footer-box h3 {
+    color: #0B3D91;
+    font-size: clamp(24px, 2.6vw, 32px);
+    font-weight: 800;
+    margin: 0 0 16px;
+}
+
+/* ---------- PREMIUM LIGHT FOOTER TEXT (mirrors Contact 2B-9 info text) ---------- */
+footer .footer-box p {
+    color: #3f5666;
+    font-size: 16px;
+    line-height: 1.75;
+    margin: 0 0 12px;
+}
+
+/* ---------- QUICK LINKS LIST (premium light reset) ---------- */
+footer .footer-box ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+footer .footer-box li {
+    margin-bottom: 10px;
+}
+
+/* ---------- PREMIUM LIGHT FOOTER LINKS (mirrors Contact 2B-9 info links) ---------- */
+footer .footer-box a {
+    color: #0B3D91;
+    text-decoration: none;
+    font-weight: 700;
+    transition: color .3s ease, padding-left .3s ease;
+}
+
+footer .footer-box a:hover {
+    color: #00BFFF;
+    padding-left: 8px;
+}
+
+/* ---------- FOOTER DIVIDER (premium light hairline) ---------- */
+footer hr {
+    border: none;
+    border-top: 1px solid rgba(0, 48, 59, 0.08);
+    margin: 30px 0 20px;
+    opacity: 1;
+}
+
+/* ---------- COPYRIGHT (premium light muted text) ---------- */
+footer .copyright {
+    color: #3f5666;
+    font-size: 15px;
+    margin: 0;
+    text-align: center;
+}
+
+/* ---------- RESPONSIVE PANEL (mirrors Stats 2B-11 / 2C-4) ---------- */
+@media (max-width: 1280px) {
+    footer {
+        margin: 56px 20px;
+    }
+}
+
+@media (max-width: 1024px) and (min-width: 769px) {
+    footer {
+        padding: 54px 30px;
+        border-radius: 22px;
+    }
+
+    footer::before {
+        border-radius: 22px 22px 0 0;
+    }
+
+    footer .footer-container {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 32px;
+    }
+}
+
+@media (max-width: 768px) {
+    footer {
+        padding: 40px 20px;
+        border-radius: 20px;
+        margin: 40px 15px;
+    }
+
+    footer::before {
+        border-radius: 20px 20px 0 0;
+    }
+
+    footer .footer-container {
+        grid-template-columns: 1fr;
+        gap: 24px;
+    }
+
+    footer .footer-box h3 {
+        font-size: 24px;
+    }
+}
+
+/* ---------- DARK MODE (consistent with the --dm-* system) ---------- */
+body.dark-mode footer {
+    background: var(--dm-surface);
+    border-color: var(--dm-border);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
+}
+
+body.dark-mode footer::before {
+    background: linear-gradient(90deg, var(--dm-cyan), #0B3D91);
+}
+
+body.dark-mode footer .footer-box h3 {
+    color: var(--dm-cyan);
+}
+
+body.dark-mode footer .footer-box p {
+    color: var(--dm-muted);
+}
+
+body.dark-mode footer .footer-box a {
+    color: var(--dm-blue);
+}
+
+body.dark-mode footer .footer-box a:hover {
+    color: var(--dm-cyan);
+}
+
+body.dark-mode footer hr {
+    border-top: 1px solid var(--dm-border);
+}
+
+body.dark-mode footer .copyright {
+    color: var(--dm-muted);
+}
+/* ================================================================
+   PHASE 2C-3 — MOBILE HERO IMAGE VISIBILITY (approved fix)
+   Approved user change: on mobile the hero photography must be
+   natural, bright and clearly visible — with NO dark scrim and NO
+   frosted blur covering it. Scoped strictly to
+   @media (max-width: 768px); desktop/tablet (min-width: 769px)
+   hero is untouched. Changes:
+     1) removes the mobile text-safety scrim gradient entirely
+        (.hero-slider .hero-scrim -> transparent),
+     2) removes the mobile frosted/darkened copy zone: the dark
+        gradient AND the backdrop-filter blur(7px) + saturate on
+        .hero-slider ~ .overlay.hero-overlay are both eliminated,
+     3) keeps the copy readable with a soft text-shadow only —
+        no background, no gradient, no overlay is substituted.
+   Carousel, slide timing/autoplay, arrows, dots, typewriter, hero
+   images, image positioning, hero text/content, buttons and nav are
+   untouched. CSS-only, overrides only, appended for rollback.
+   ================================================================ */
+@media (max-width: 768px) {
+
+    /* 1) Remove the mobile scrim gradient so the full hero image
+          shows through un-darkened. ----------------------------- */
+    .hero-slider .hero-scrim {
+        background: transparent;
+    }
+
+    /* 2) Remove the mobile frosted copy zone: no dark gradient,
+          no backdrop blur behind the hero copy. ------------------ */
+    .hero-slider ~ .overlay.hero-overlay {
+        background: transparent;
+        -webkit-backdrop-filter: none;
+        backdrop-filter: none;
+    }
+
+    /* 3) Readability WITHOUT any image overlay: non-overlay
+          text-shadow on the hero copy only (typography, not a
+          scrim). ------------------------------------------------- */
+    .hero-slider ~ .overlay.hero-overlay .hero-badge,
+    .hero-slider ~ .overlay.hero-overlay h1,
+    .hero-slider ~ .overlay.hero-overlay .hero-type,
+    .hero-slider ~ .overlay.hero-overlay p.hero-sub,
+    .hero-slider ~ .overlay.hero-overlay .hero-trust {
+        text-shadow: 0 1px 3px rgba(0, 0, 0, 0.65),
+                     0 2px 10px rgba(0, 0, 0, 0.40);
+    }
+}
