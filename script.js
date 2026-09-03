@@ -307,16 +307,41 @@ const galleryImage = document.getElementById("galleryImage");
 const galleryClose = document.querySelector(".gallery-close");
 const galleryPrev = document.querySelector(".gallery-prev");
 const galleryNext = document.querySelector(".gallery-next");
+const galleryLiveLink = document.getElementById("galleryLiveLink");
 
 const galleryItems = Array.from(document.querySelectorAll(".portfolio-item img"));
 
 let currentImage = 0;
+
+function updateGalleryLiveLink(){
+
+    const currentItem = galleryItems[currentImage].closest(".portfolio-item");
+
+    const liveUrl = currentItem ? currentItem.getAttribute("data-live-url") : "";
+
+    if(liveUrl){
+
+        galleryLiveLink.href = liveUrl;
+
+        galleryLiveLink.hidden = false;
+
+    }else{
+
+        galleryLiveLink.removeAttribute("href");
+
+        galleryLiveLink.hidden = true;
+
+    }
+
+}
 
 function openGallery(index){
 
     currentImage = index;
 
     galleryImage.src = galleryItems[currentImage].src;
+
+    updateGalleryLiveLink();
 
     galleryModal.classList.add("active");
 
@@ -342,6 +367,8 @@ function showNext(){
 
     galleryImage.src = galleryItems[currentImage].src;
 
+    updateGalleryLiveLink();
+
 }
 
 function showPrev(){
@@ -353,6 +380,8 @@ function showPrev(){
     }
 
     galleryImage.src = galleryItems[currentImage].src;
+
+    updateGalleryLiveLink();
 
 }
 
