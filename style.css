@@ -7888,3 +7888,146 @@ body.dark-mode #galleryModal.gallery-modal .gallery-live-link:hover {
     background: linear-gradient(135deg, #0d6efd, #00303B);
     box-shadow: 0 14px 34px rgba(0, 191, 255, 0.30);
 }
+/* ================================================================
+   PHASE 2C-7 — PREMIUM LIGHT WHY-US + EXPERIENCE PANELS
+   Wraps the Why-Us and Experience sections in the approved white
+   premium panel — the same shell used by Stats 2B-11, Services
+   2C-4 and Footer 2C-5: white surface, 6px top gradient accent,
+   24px corners, soft shadow, max-width 1240px, 64/44 padding.
+   Both panel headings move to the premium typography already
+   used by Services 2C-4 and the Experience intro to the premium
+   muted tone.
+
+   The legacy base rule `section:not(.hero)` still paints every
+   <section> as a darkgrey 90%-width box with its own margin,
+   padding, radius and shadow. The id-scoped selectors below
+   out-bind it in both light and dark mode, so Why-Us and
+   Experience finally render their approved light surfaces
+   instead of the legacy grey box. The 2B-4 Why-Us cards and the
+   2B-5 Experience timeline (spine, nodes, connectors, year
+   chips, content cards) are left completely untouched.
+
+   CSS-only and append-only — no existing rule edited or deleted,
+   no index.html / script.js change. Appended for zero-risk
+   rollback.
+=============================================================== */
+
+/* ---------- PREMIUM PANEL SHELL (mirror of Stats 2B-11 / 2C-4) ---------- */
+section#why-us,
+section#experience {
+    position: relative;
+    width: auto;                /* undo legacy section:not(.hero) 90% */
+    max-width: 1240px;
+    margin: 60px auto;
+    padding: 64px 44px;
+    background: #ffffff;
+    border: 1px solid rgba(0, 48, 59, 0.08);
+    border-radius: 24px;
+    box-shadow: 0 12px 32px rgba(0, 48, 59, 0.08);
+    box-sizing: border-box;
+}
+
+/* premium gradient accent along the top edge */
+section#why-us::before,
+section#experience::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 6px;
+    background: linear-gradient(90deg, #00BFFF, #0B3D91);
+    border-radius: 24px 24px 0 0;
+    pointer-events: none;
+}
+
+/* the 2B-5 mobile node halo blends with the white panel surface */
+#experience {
+    --exp-ring: #ffffff;
+}
+
+/* ---------- PANEL HEADING (mirror of Services 2C-4) ---------- */
+#why-us h2,
+#experience h2 {
+    color: #0B3D91;
+    font-size: clamp(30px, 3.2vw, 40px);
+    font-weight: 800;
+    line-height: 1.15;
+    margin: 0 0 46px;
+}
+
+/* ---------- EXPERIENCE INTRO (premium muted text) ---------- */
+#experience .experience-intro {
+    color: #3f5666;
+    font-size: 18px;
+    line-height: 1.8;
+    max-width: 850px;
+    margin: 0 auto 20px;
+}
+
+/* ---------- RESPONSIVE PANEL (mirror of Stats 2B-11 / 2C-4) ---------- */
+@media (max-width: 1280px) {
+    section#why-us,
+    section#experience {
+        margin: 56px 20px;
+    }
+}
+
+@media (max-width: 1024px) and (min-width: 769px) {
+    section#why-us,
+    section#experience {
+        padding: 54px 30px;
+        border-radius: 22px;
+    }
+
+    section#why-us::before,
+    section#experience::before {
+        border-radius: 22px 22px 0 0;
+    }
+}
+
+@media (max-width: 768px) {
+    section#why-us,
+    section#experience {
+        padding: 40px 20px;
+        border-radius: 20px;
+        margin: 40px 15px;
+    }
+
+    section#why-us::before,
+    section#experience::before {
+        border-radius: 20px 20px 0 0;
+    }
+
+    #why-us h2,
+    #experience h2 {
+        font-size: 30px;
+    }
+
+    #experience .experience-intro {
+        font-size: 16px;
+        line-height: 1.7;
+    }
+}
+
+/* ---------- DARK MODE (consistent with the --dm-* system) ---------- */
+body.dark-mode section#why-us,
+body.dark-mode section#experience {
+    background: var(--dm-surface);
+    border-color: var(--dm-border);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
+}
+
+body.dark-mode section#why-us::before,
+body.dark-mode section#experience::before {
+    background: linear-gradient(90deg, var(--dm-cyan), #0B3D91);
+}
+
+body.dark-mode #why-us h2,
+body.dark-mode #experience h2 {
+    color: var(--dm-text);
+}
+
+body.dark-mode #experience .experience-intro {
+    color: var(--dm-text);
+}
