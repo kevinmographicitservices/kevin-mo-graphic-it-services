@@ -27,6 +27,12 @@ window.addEventListener("scroll", function () {
 
     });
 });
+// A page can have above-the-fold .reveal content (e.g. the About page)
+// that never receives a scroll input on load; evaluate once on load so
+// no section is ever stuck invisible before the first scroll gesture.
+window.addEventListener("load", function () {
+    window.dispatchEvent(new Event("scroll"));
+});
 // =========================================
 // STATS COUNTERS (animate once when scrolled into view)
 // =========================================
@@ -311,6 +317,14 @@ const galleryLiveLink = document.getElementById("galleryLiveLink");
 
 const galleryItems = Array.from(document.querySelectorAll(".portfolio-item img"));
 
+// SHARED-PAGE HARDENING: the lightbox markup only exists on Home;
+// on About these hooks are null, so the wiring and keyboard handler
+// below are gated behind this flag (the functions stay defined but are
+// never invoked without gallery items).
+const hasGallery = galleryModal && galleryImage && galleryClose &&
+    galleryNext && galleryPrev && galleryLiveLink &&
+    galleryItems.length > 0;
+
 let currentImage = 0;
 
 function updateGalleryLiveLink(){
@@ -385,39 +399,43 @@ function showPrev(){
 
 }
 
-galleryItems.forEach((image,index)=>{
+if (hasGallery) {
 
-    image.setAttribute("draggable","false");
+    galleryItems.forEach((image,index)=>{
 
-    image.addEventListener("dragstart",e=>e.preventDefault());
+        image.setAttribute("draggable","false");
 
-    image.addEventListener("click",function(e){
+        image.addEventListener("dragstart",e=>e.preventDefault());
 
-        e.preventDefault();
+        image.addEventListener("click",function(e){
 
-        openGallery(index);
+            e.preventDefault();
+
+            openGallery(index);
+
+        });
 
     });
 
-});
+    galleryClose.addEventListener("click",closeGallery);
 
-galleryClose.addEventListener("click",closeGallery);
+    galleryNext.addEventListener("click",showNext);
 
-galleryNext.addEventListener("click",showNext);
+    galleryPrev.addEventListener("click",showPrev);
 
-galleryPrev.addEventListener("click",showPrev);
+    galleryModal.addEventListener("click",function(e){
 
-galleryModal.addEventListener("click",function(e){
+        if(e.target===galleryModal){
+            closeGallery();
+        }
 
-    if(e.target===galleryModal){
-        closeGallery();
-    }
+    });
 
-});
+}
 
 document.addEventListener("keydown",function(e){
 
-    if(!galleryModal.classList.contains("active")) return;
+    if(!hasGallery || !galleryModal.classList.contains("active")) return;
 
     if(e.key==="Escape"){
         closeGallery();
@@ -528,9 +546,18 @@ window.addEventListener("scroll", () => {
 
     navLinksItems.forEach(link => {
 
+        const href = link.getAttribute("href") || "";
+
+        // Page-level links (index.html / about.html) have no anchor
+        // fragment and are never scroll-spied — they keep the static
+        // active state set for the current page.
+        if (href.indexOf("#") === -1) return;
+
         link.classList.remove("active");
 
-        if(link.getAttribute("href") === "#" + current){
+        const targetId = href.slice(href.indexOf("#") + 1);
+
+        if(targetId === current){
 
             link.classList.add("active");
 
@@ -540,12 +567,30 @@ window.addEventListener("scroll", () => {
 
 });
 // =========================================
+// ABOUT PAGE ACTIVE NAVIGATION
+// =========================================
+
+(function () {
+
+    // Only the About page marks its ABOUT item active. The scrollspy
+    // above never touches page-level (non-hash) links, so this state
+    // persists while scrolling on the About page.
+    if (!document.body.classList.contains("about-page")) return;
+
+    const aboutLink = document.querySelector('.nav-links a[href="about.html"]');
+
+    if (aboutLink) aboutLink.classList.add("active");
+
+})();
+// =========================================
 // NAVBAR SCROLL EFFECT
 // =========================================
 
 const navbar = document.getElementById("navbar");
 
 window.addEventListener("scroll", function(){
+
+    if (!navbar) return;
 
     if(window.scrollY > 50){
 
@@ -582,6 +627,9 @@ document.addEventListener("DOMContentLoaded", function () {
     let isDeleting = false;
 
     const typing = document.getElementById("typing");
+
+    // No typing element (About page has no hero typewriter) — safe exit.
+    if (!typing) return;
 
     function typeEffect() {
 
@@ -658,6 +706,8 @@ const progressBar = document.getElementById("progressBar");
 
 window.addEventListener("scroll", function () {
 
+    if (!progressBar) return;
+
     const scrollTop = document.documentElement.scrollTop;
 
     const scrollHeight =
@@ -675,17 +725,21 @@ window.addEventListener("scroll", function () {
 
 const mobileLinks = document.querySelectorAll(".nav-links a");
 
-mobileLinks.forEach(link => {
+if (navLinks) {
 
-    link.addEventListener("click", function(){
+    mobileLinks.forEach(link => {
 
-        navLinks.classList.remove("active");
+        link.addEventListener("click", function(){
 
-        if (menuBackdrop) menuBackdrop.classList.remove("active");
+            navLinks.classList.remove("active");
+
+            if (menuBackdrop) menuBackdrop.classList.remove("active");
+
+        });
 
     });
 
-});
+}
 
 // =========================================
 // DARK / LIGHT THEME TOGGLE (PERSISTED)
