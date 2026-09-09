@@ -8370,3 +8370,79 @@ body.dark-mode .cap-list strong {
 body.dark-mode .cap-list span {
     color: var(--dm-muted);
 }
+
+/* ================================================================
+   PHASE 3 — STEP 3A — APPROVED POLISH FIXES (CSS-ONLY OVERRIDES)
+   ----------------------------------------------------------------
+   FIX #1  section.page-hero
+           The legacy rule `section:not(.hero)` (specificity 0,1,1)
+           out-bound the approved `.page-hero` (0,1,0), so the About
+           hero was rendering as a darkgrey 90%-width legacy box.
+           This override uses the same class+type specificity as the
+           legacy rule but comes later in source order, restoring the
+           intended full-width premium hero. Values mirror the
+           existing Phase 3 `.page-hero` rule. Legacy rule untouched.
+   FIX #2  section.about-capabilities
+           Same legacy-rule override problem: the capabilities panel
+           was rendering as a legacy darkgrey box. This restores the
+           approved premium panel geometry from Phase 3. Values mirror
+           the existing `.about-capabilities` rule incl. tablet/mobile
+           responsive values. Legacy rule untouched.
+   Append-only; zero-risk rollback.
+   ================================================================ */
+
+/* ---------- FIX #1 — ABOUT PAGE HERO (full-width premium shell) ---------- */
+section.page-hero {
+    width: auto;
+    max-width: none;
+    margin: 0;
+    padding: 150px 24px 110px;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+    background:
+        radial-gradient(circle at 50% 18%,
+                        rgba(0, 191, 255, 0.16) 0%,
+                        rgba(0, 191, 255, 0.00) 58%),
+        linear-gradient(135deg, #00303B 0%, #042F35 55%, #0B3D91 100%);
+}
+
+/* mobile: keep the existing responsive hero shell (legacy can't win here either) */
+@media (max-width: 768px) {
+    section.page-hero {
+        min-height: 54vh;
+        padding: 135px 20px 88px;
+    }
+}
+
+/* ---------- FIX #2 — ABOUT CAPABILITIES PANEL (premium surface) ---------- */
+section.about-capabilities {
+    position: relative;
+    width: auto;
+    max-width: 1240px;
+    margin: 60px auto;
+    padding: 64px 44px;
+    background: #ffffff;
+    border: 1px solid rgba(0, 48, 59, 0.08);
+    border-radius: 24px;
+    box-shadow: 0 12px 32px rgba(0, 48, 59, 0.08);
+    box-sizing: border-box;
+    text-align: center;
+}
+
+/* tablet: mirror existing Phase 3 values */
+@media (max-width: 1024px) and (min-width: 769px) {
+    section.about-capabilities {
+        padding: 54px 30px;
+        border-radius: 22px;
+    }
+}
+
+/* mobile: mirror existing Phase 3 values */
+@media (max-width: 768px) {
+    section.about-capabilities {
+        padding: 40px 20px;
+        border-radius: 20px;
+        margin: 40px 15px;
+    }
+}
