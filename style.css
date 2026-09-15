@@ -8589,3 +8589,7 @@ section.process h2::after,     /* markup: <section class="process section" id="p
 .btn.btn-hero-outline {
     border-radius: 30px;
 }
+/* ---------- FLOAT-FIX — SEPARATE WHATSAPP FROM BACK-TO-TOP ---------- */
+.whatsapp {
+    bottom: 110px;
+}
