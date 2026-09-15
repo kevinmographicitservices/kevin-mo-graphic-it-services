@@ -462,6 +462,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const cards = document.querySelectorAll(".testimonial-card");
 
+    const sliderContainer = document.querySelector(".testimonial-slider");
+
+    const prevButton = document.querySelector(".testimonial-prev");
+
+    const nextButton = document.querySelector(".testimonial-next");
+
     let currentIndex = 0;
 
     function getCardsPerView() {
@@ -478,16 +484,18 @@ document.addEventListener("DOMContentLoaded", function () {
 
     }
 
-    function slideTestimonials() {
+    function updateSlide() {
 
         const cardsPerView = getCardsPerView();
 
         const maxIndex = cards.length - cardsPerView;
 
-        currentIndex++;
-
         if (currentIndex > maxIndex) {
             currentIndex = 0;
+        }
+
+        if (currentIndex < 0) {
+            currentIndex = maxIndex;
         }
 
         const cardWidth = sliderContainer.clientWidth / cardsPerView;
@@ -495,21 +503,89 @@ document.addEventListener("DOMContentLoaded", function () {
         track.style.transform =
             `translateX(-${currentIndex * cardWidth}px)`;
 
-        
+    }
+
+    function slideTestimonials() {
+
+        currentIndex++;
+
+        updateSlide();
 
     }
 
-    const sliderContainer = document.querySelector(".testimonial-slider");
+    // prefers-reduced-motion (or no slider container) -> autoplay disabled
+    const reduceMotion =
+        window.matchMedia &&
+        window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-    let slider = setInterval(slideTestimonials, 4000);
+    let slider = null;
 
-    sliderContainer.addEventListener("mouseenter", function () {
-        clearInterval(slider);
-    });
+    function startAutoplay() {
 
-    sliderContainer.addEventListener("mouseleave", function () {
+        if (reduceMotion) return;
+
+        stopAutoplay();
+
         slider = setInterval(slideTestimonials, 4000);
-    });
+
+    }
+
+    function stopAutoplay() {
+
+        if (slider) {
+            clearInterval(slider);
+            slider = null;
+        }
+
+    }
+
+    if (prevButton) {
+
+        prevButton.addEventListener("click", function () {
+
+            currentIndex--;
+
+            updateSlide();
+
+            startAutoplay();
+
+        });
+
+    }
+
+    if (nextButton) {
+
+        nextButton.addEventListener("click", function () {
+
+            currentIndex++;
+
+            updateSlide();
+
+            startAutoplay();
+
+        });
+
+    }
+
+    if (sliderContainer) {
+
+        sliderContainer.addEventListener("mouseenter", stopAutoplay);
+
+        sliderContainer.addEventListener("mouseleave", startAutoplay);
+
+        // Pause while keyboard focus is inside the component so the
+        // carousel cannot move underneath an interacting user.
+        sliderContainer.addEventListener("focusin", stopAutoplay);
+
+        sliderContainer.addEventListener("focusout", function () {
+
+            if (!sliderContainer.contains(document.activeElement)) {
+                startAutoplay();
+            }
+
+        });
+
+    }
 
     window.addEventListener("resize", function () {
 
@@ -518,6 +594,8 @@ document.addEventListener("DOMContentLoaded", function () {
         track.style.transform = "translateX(0)";
 
     });
+
+    startAutoplay();
 
 });
 // =========================================

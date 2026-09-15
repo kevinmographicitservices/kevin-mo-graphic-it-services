@@ -8446,3 +8446,146 @@ section.about-capabilities {
         margin: 40px 15px;
     }
 }
+
+/* ================================================================
+   PHASE 3 — STEP 3B — APPROVED POLISH FIXES (append-only)
+   ----------------------------------------------------------------
+   TEST-1       Testimonial accessibility: visible Previous/Next
+                controls (index.html) + scoped JS (script.js) for
+                pause-on-hover, pause-on-focus and a reduced-motion
+                autoplay guard. Styling below is scoped to the
+                testimonial component only.
+   NAV-1        Tablet navbar rebalance — ONLY for 769–920px.
+                Desktop (>=921px) and mobile (<=768px) are untouched.
+   Cascade-1    Suppress the legacy h2::after underline inside the
+                approved premium panels. The legacy global rule is
+                untouched; only these scoped headings are affected.
+   Button-B-1   Unify .btn radius with the premium pill system. The
+                legacy generic button {} rule is NOT rewritten.
+   ================================================================ */
+
+/* ---------- TEST-1 — TESTIMONIAL CONTROLS ---------- */
+.testimonial-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    margin: 30px auto 0;
+}
+
+.testimonial-prev,
+.testimonial-next {
+    width: 46px;
+    height: 46px;
+    padding: 0;
+    border: 1px solid rgba(0, 48, 59, 0.18);
+    border-radius: 50%;
+    background: #ffffff;
+    color: #0B3D91;
+    font-size: 20px;
+    line-height: 1;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.3s ease, color 0.3s ease,
+                border-color 0.3s ease, transform 0.3s ease;
+}
+
+.testimonial-prev:hover,
+.testimonial-next:hover {
+    background: #00BFFF;
+    color: #ffffff;
+    border-color: #00BFFF;
+    transform: translateY(-2px);
+}
+
+.testimonial-prev:focus-visible,
+.testimonial-next:focus-visible {
+    background: #00BFFF;
+    color: #ffffff;
+    border-color: #00BFFF;
+    outline: 2px solid #00BFFF;
+    outline-offset: 2px;
+}
+
+/* dark mode parity */
+body.dark-mode .testimonial-prev,
+body.dark-mode .testimonial-next {
+    background: var(--dm-card);
+    color: var(--dm-cyan);
+    border-color: var(--dm-border);
+}
+
+body.dark-mode .testimonial-prev:hover,
+body.dark-mode .testimonial-next:hover,
+body.dark-mode .testimonial-prev:focus-visible,
+body.dark-mode .testimonial-next:focus-visible {
+    background: var(--dm-cyan);
+    color: #ffffff;
+    border-color: var(--dm-cyan);
+}
+
+/* ---------- NAV-1 — TABLET NAV REBALANCE (769–920px ONLY) ---------- */
+@media (max-width: 920px) and (min-width: 769px) {
+
+    #navbar {
+        justify-content: space-between;
+        padding: 12px 3.5%;
+    }
+
+    /* Neutralise the base margin-left:auto so the links sit balanced
+       between the brand (left) and the theme toggle (right). */
+    #navbar .nav-links {
+        margin-left: 0;
+        gap: 12px;
+    }
+
+    #navbar .nav-links a {
+        font-size: 13.5px;
+        padding: 8px 0;
+    }
+
+    /* Slim the CTA so it cannot crowd the right edge at ~769px. */
+    #navbar .nav-links .nav-cta a.nav-cta-btn {
+        padding: 8px 13px;
+        font-size: 13px;
+        border-radius: 40px;
+    }
+
+    #navbar .nav-links .nav-cta-btn span {
+        display: none;
+    }
+
+    #navbar .theme-toggle {
+        margin-left: 8px;
+    }
+
+}
+
+/* ---------- CASCADE-1 — SUPPRESS LEGACY h2 UNDERLINE IN PREMIUM PANELS ---------- */
+/* The legacy global h2::after bar still renders under these premium
+   headings; suppress it only inside the approved premium sections.
+   The legacy rule itself is NOT modified. */
+.stats h2::after,              /* markup: <section class="stats"> */
+#portfolio h2::after,
+#testimonials h2::after,
+#contact h2::after,
+#featured-projects h2::after,
+.about-capabilities h2::after, /* markup: <section class="about-capabilities"> */
+section.process h2::after,     /* markup: <section class="process section" id="process"> */
+.mission h2::after {
+    display: none;
+}
+
+/* ---------- BUTTON-B-1 — UNIFY .btn RADIUS WITH THE PILL SYSTEM ---------- */
+.btn,
+.btn-secondary {
+    border-radius: 30px;
+}
+
+/* hero variants carry their own radius; raise them to the same pill */
+.btn.btn-hero,
+.btn.btn-hero-outline {
+    border-radius: 30px;
+}
